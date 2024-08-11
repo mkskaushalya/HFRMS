@@ -1,3 +1,57 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom CSS */
+
+:root{
+    --darkbg : rgb(55 65 81 / 1);
+}
+
+.find-form{
+    width: calc(100% - 2rem);
+
+}
+
+.find-form .input-items{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+
+}
+.find-form .input-items{
+    row-gap: 0.5rem;
+}
+.find-form .input-items label{
+    font-size: 18px;
+}
+.find-form .input-items select, .find-form .input-items input{
+    
+}
+.find-form .input-items button{
+    padding: 0.5rem 1rem;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 18px;
+}
+.find-form .input-items select option{
+    
+
+}
+@media(prefers-color-scheme: dark){
+    .find-form .input-items{
+        color: white;
+    }
+    .find-form .input-items select, .find-form .input-items input{
+        background-color: var(--darkbg);
+        color: white;
+        color-scheme: dark;
+    }
+
+    .find-form .input-items button{
+        background-color: white;
+        color: var(--darkbg);
+    }
+}
