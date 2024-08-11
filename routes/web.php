@@ -12,9 +12,14 @@ Route::get('about', function () {
 Route::get('contact', function () {
     return view('contact');
 })->name('contact');
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+
+Route::get('test', function () {
+    return ['message' => 'Hello', 'status' => 'ok', 'csrf' => @csrf_token() ];
+})->name('test');
+
+Route::get('hall', function () {
+    return view('hall');
+})->name('hall');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -25,5 +30,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 
 require __DIR__.'/auth.php';
