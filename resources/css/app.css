@@ -25,7 +25,7 @@
     --gray-darker: #34495e;
     --gray-lighter: #ecf0f1;
 
-    --bg-color: #fff1;
+    --bg-color: rgb(31 41 55);
 
     --text-light: #f5f5f5;
     --text-dark: #34495e;
@@ -155,6 +155,7 @@ section .cont .heading h2{
     display: flex;
     gap: 1rem;
     justify-content: space-between;
+    align-items: flex-start;
 }
 
 #hall-results .left, #hall-results .right{
@@ -166,6 +167,7 @@ section .cont .heading h2{
 
 #hall-results .left{
     width: 20rem;
+    height: auto;
 }
 
 #hall-results .right{
