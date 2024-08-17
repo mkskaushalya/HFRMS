@@ -13,6 +13,7 @@ Route::get('contact', function () {
     return view('contact');
 })->name('contact');
 
+
 Route::get('test', function () {
     return ['message' => 'Hello', 'status' => 'ok', 'csrf' => @csrf_token() ];
 })->name('test');

@@ -17,15 +17,15 @@ class HallFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name,
-            'hall_number' => $this->faker->unique()->numberBetween(100, 999),
-            'location' => $this->faker->address,
-            'capacity' => $this->faker->numberBetween(20, 500),
-            'description' => $this->faker->paragraph,
+            'name' => fake()->company(),
+            'hall_number' => fake()->unique()->numberBetween(100, 999),
+            'location' => fake()->address,
+            'capacity' => fake()->numberBetween(20, 500),
+            'description' => fake()->paragraph,
             'status' => 'active',
-            'image' => $this->faker->imageUrl(),
+            'image' => fake()->imageUrl(),
             'user_id' => 1,
-            'category_id' => 1,
         ];
+
     }
 }

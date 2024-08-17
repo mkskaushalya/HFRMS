@@ -1,3 +1,5 @@
+@import "daterangepicker";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,53 +7,177 @@
 /* Custom CSS */
 
 :root{
-    --darkbg : rgb(55 65 81 / 1);
+    --primary: #2c3e50;
+    --secondary: #f39c12;
+    --darkbg: #374151;
+    --lightbg: #ddd;
+    --danger: #e74c3c;
+    --success: #2ecc71;
+    --warning: #f1c40f;
+    --info: #3498db;
+    --dark: #34495e;
+    --light: #ecf0f1;
+    --white: #fff;
+    --black: #000;
+    --gray: #7f8c8d;
+    --gray-light: #bdc3c7;
+    --gray-dark: #2c3e50;
+    --gray-darker: #34495e;
+    --gray-lighter: #ecf0f1;
+
+    --bg-color: #fff1;
+
+    --text-light: #f5f5f5;
+    --text-dark: #34495e;
+    --text-gray: #7f8c8d;
+    --text-gray-light: #bdc3c7;
+
+    --main-max-width: 80rem;
+
+    --border-radius: 0.25rem;
+
+    --transition: all 0.3s ease-in-out;
 }
-
-.find-form{
-    width: calc(100% - 2rem);
-
-}
-
-.find-form .input-items{
+main{
+    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    align-items: center;
+    padding: 1rem 0;
+}
+section{
+    width: 100%;
+    max-width: var(--main-max-width);
+    /*background-color: #ddd;*/
+    padding: 1rem 2rem;
+}
+
+section .cont{
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+}
+section .cont .heading{
+    display: flex;
     justify-content: center;
-
+    align-items: center;
 }
-.find-form .input-items{
-    row-gap: 0.5rem;
-}
-.find-form .input-items label{
-    font-size: 18px;
-}
-.find-form .input-items select, .find-form .input-items input{
-    
-}
-.find-form .input-items button{
-    padding: 0.5rem 1rem;
-    border: none;
-    cursor: pointer;
+section .cont .heading h2{
+    font-size: 2rem;
     font-weight: 600;
-    font-size: 18px;
+    color: var(--white);
 }
-.find-form .input-items select option{
-    
+
+#hall-search{
+    background-color: var(--bg-color);
+    border-radius: var(--border-radius);
+    border: 1px solid #ddd1;
+}
+
+#hall-search .search-form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
+    background-color: var(--lightbg);
+    border-radius: var(--border-radius);
+}
+
+#hall-search .search-form form{
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    width: 100%;
+    padding: 2rem;
 
 }
+
+#hall-search .search-form form .input-box{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 10rem;
+    justify-content: center;
+}
+
+#hall-search .search-form form .input-box label{
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+#hall-search .search-form form .input-box select, #hall-search .search-form form .input-box input{
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    min-width: 15rem;
+    border: 1px solid var(--gray);
+    border-radius: var(--border-radius);
+}
+
+#hall-search .search-form form .input-box button{
+    padding: 0.5rem 2rem;
+    height: 3rem;
+    width: 100%;
+    border: none;
+    background-color: var(--primary);
+    color: var(--white);
+    font-weight: 600;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+#hall-search .search-form form .input-box select option span{
+    padding: 0.5rem;
+
+}
+
+#hall-search .search-form form .input-box select option{
+    padding: 0.5rem;
+}
+
+#hall-search .search-form form .input-box button:hover{
+    background-color: var(--dark);
+}
+
+#hall-search .search-form form .input-box button:disabled{
+    background-color: var(--gray);
+    cursor: not-allowed;
+}
+
+#hall-search .search-form form .input-box button:disabled:hover{
+    background-color: var(--gray);
+}
+
+#hall-results{
+    padding: 0;
+    margin-top: 1rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+#hall-results .left, #hall-results .right{
+    background-color: var(--bg-color);
+    border-radius: var(--border-radius);
+    border: 1px solid #ddd1;
+    padding: 1rem;
+}
+
+#hall-results .left{
+    width: 20rem;
+}
+
+#hall-results .right{
+    width: calc(100% - 20rem - 1rem);
+}
+
+
 @media(prefers-color-scheme: dark){
-    .find-form .input-items{
-        color: white;
-    }
-    .find-form .input-items select, .find-form .input-items input{
-        background-color: var(--darkbg);
-        color: white;
-        color-scheme: dark;
-    }
 
-    .find-form .input-items button{
-        background-color: white;
-        color: var(--darkbg);
-    }
+}
+
+@media screen and (max-width: 768px) {
+
+
 }

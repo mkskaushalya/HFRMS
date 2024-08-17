@@ -4,85 +4,134 @@
             {{ __('Hall Booking Page') }}
         </h2>
     </x-slot>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 w-full">
-            <h2 class="text-center text-2xl font-bold text-white">Find a Hall</h2>
+    <section id="hall-search">
+        <div class="cont">
+            <div class="heading"><h2>Search Hall</h2></div>
+            <div class="search-form">
+                <form action="" method="POST">
+                    @csrf
+                    <div class="input-box">
+                        <label for="location">Location</label>
+                        <select name="location" id="location">
+                            <option value="1"><span>Location 1</span></option>
+                            <option value="2"><span>Location 2</span></option>
+                            <option value="3"><span>Location 3</span></option>
+                            <option value="4"><span>Location 4</span></option>
+                        </select>
+                    </div>
+                    <div class="input-box">
+                        <label for="daterange">Date</label>
+                        <input type="date" value="{{ today()->format("Y-m-d")  }}" min="{{ today()->format("Y-m-d") }}" name="daterange" id="daterange" placeholder="Select Date">
+                    </div>
+                    <div class="input-box">
+                        <label for="timerange">Time</label>
+                        <select name="timerange" id="timerange">
+                            <option value="1"><span>Time 1</span></option>
+                            <option value="2"><span>Time 2</span></option>
+                            <option value="3"><span>Time 3</span></option>
+                            <option value="4"><span>Time 4</span></option>
+                        </select>
+                    </div>
+                    <div class="input-box">
+                        <button type="submit" name="searchhallbtn">Search</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <form class="find-form max-w-7xl   mx-auto sm:px-6 lg:px-8 w-full flex justify-between mt-10 bg-white dark:bg-gray-800 py-5 rounded">
-            <div class="input-items">
-                <label class="dark:text-white">Location</label>
-                <select class="" name="" id="">
-                    <option value="">Select Location</option>
-                    <option value="">Location 1</option>
-                    <option value="">Location 2</option>
-                    <option value="">Location 3</option>
-                    <option value="">Location 4</option>
-                </select>
+    </section>
+    <section id="hall-results">
+        <div class="left">
+            <div class="cont">
+                <div class="heading"><h2>Filter</h2></div>
+                <div class="filter-form">
+                    <form action="" method="POST">
+                        @csrf
+                        <div class="input-box">
+                            <label for="capacity">Capacity</label>
+                            <select name="capacity" id="capacity">
+                                <option value="1"><span>100</span></option>
+                                <option value="2"><span>200</span></option>
+                                <option value="3"><span>300</span></option>
+                                <option value="4"><span>400</span></option>
+                            </select>
+                        </div>
+                        <div class="input-box">
+                            <label for="price">Price</label>
+                            <select name="price" id="price">
+                                <option value="1"><span>$100</span></option>
+                                <option value="2"><span>$200</span></option>
+                                <option value="3"><span>$300</span></option>
+                                <option value="4"><span>$400</span></option>
+                            </select>
+                        </div>
+                        <div class="input-box">
+                            <button type="submit" name="filterhallbtn">Filter</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="input-items">
-                <label>Date</label>
-                <input type="date">
-            </div>
-            <div class="input-items">
-                <label>Time</label>
-                <input type="time">
-            </div>
-            <div class="input-items">
-                <label>Capacity</label>
-                <input type="number">
-            </div>
-            <div class="input-items">
-                <button>Search</button>
-            </div>
-        </form>
-    </div>
-    <div class="pb-10">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 w-full">
-            <h2 class="text-center text-2xl font-bold text-white">Available Halls</h2>
         </div>
-        <div class="mt-10 max-w-7xl mx-auto sm:px-6 lg:px-8 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            <div class="hall-card bg-white dark:bg-gray-800 rounded p-5">
-                <img src="https://via.placeholder.com/150" alt="">
-                <h2 class="text-xl font-bold">Hall Name</h2>
-                <p class="text-sm">Location</p>
-                <p class="text-sm">Capacity</p>
-                <p class="text-sm">Price</p>
-                <button class="bg-blue-500 text-white px-3 py-1 rounded">Book Now</button>
-            </div>
-            <div class="hall-card bg-white dark:bg-gray-800 rounded p-5">
-                <img src="https://via.placeholder.com/150" alt="">
-                <h2 class="text-xl font-bold">Hall Name</h2>
-                <p class="text-sm">Location</p>
-                <p class="text-sm">Capacity</p>
-                <p class="text-sm">Price</p>
-                <button class="bg-blue-500 text-white px-3 py-1 rounded">Book Now</button>
-            </div>
-            <div class="hall-card bg-white dark:bg-gray-800 rounded p-5">
-                <img src="https://via.placeholder.com/150" alt="">
-                <h2 class="text-xl font-bold">Hall Name</h2>
-                <p class="text-sm">Location</p>
-                <p class="text-sm">Capacity</p>
-                <p class="text-sm">Price</p>
-                <button class="bg-blue-500 text-white px-3 py-1 rounded">Book Now</button>
-            </div>
-            <div class="hall-card bg-white dark:bg-gray-800 rounded p-5">
-                <img src="https://via.placeholder.com/150" alt="">
-                <h2 class="text-xl font-bold">Hall Name</h2>
-                <p class="text-sm">Location</p>
-                <p class="text-sm">Capacity</p>
-                <p class="text-sm">Price</p>
-                <button class="bg-blue-500 text-white px-3 py-1 rounded">Book Now</button>
-            </div>
-            <div class="hall-card bg-white dark:bg-gray-800 rounded p-5">
-                <img src="https://via.placeholder.com/150" alt="">
-                <h2 class="text-xl font-bold">Hall Name</h2>
-                <p class="text-sm">Location</p>
-                <p class="text-sm">Capacity</p>
-                <p class="text-sm">Price</p>
-                <button class="bg-blue-500 text-white px-3 py-1 rounded">Book Now</button>
+        <div class="right">
+            <div class="cont">
+                <div class="heading"><h2>Available Halls</h2></div>
+                <div class="hall-list">
+                    <div class="hall">
+                        <div class="hall-img">
+                            <img src="https://via.placeholder.com/150" alt="Hall Image">
+                        </div>
+                        <div class="hall-info">
+                            <h3>Hall Name</h3>
+                            <p>Location: Location 1</p>
+                            <p>Capacity: 100</p>
+                            <p>Price: $100</p>
+                            <a href="">Book Now</a>
+                        </div>
+                    </div>
+                    <div class="hall">
+                        <div class="hall-img">
+                            <img src="https://via.placeholder.com/150" alt="Hall Image">
+                        </div>
+                        <div class="hall-info">
+                            <h3>Hall Name</h3>
+                            <p>Location: Location 1</p>
+                            <p>Capacity: 100</p>
+                            <p>Price: $100</p>
+                            <a href="">Book Now</a>
+                        </div>
+                    </div>
+                    <div class="hall">
+                        <div class="hall-img">
+                            <img src="https://via.placeholder.com/150" alt="Hall Image">
+                        </div>
+                        <div class="hall-info">
+                            <h3>Hall Name</h3>
+                            <p>Location: Location 1</p>
+                            <p>Capacity: 100</p>
+                            <p>Price: $100</p>
+                            <a href="">Book Now</a>
+                        </div>
+                    </div>
+                    <div class="hall">
+                        <div class="hall-img">
+                            <img src="https://via.placeholder.com/150" alt="Hall Image">
+                        </div>
+                        <div class="hall-info">
+                            <h3>Hall Name</h3>
+                            <p>Location: Location 1</p>
+                            <p>Capacity: 100</p>
+                            <p>Price: $100</p>
+                            <a href="">Book Now</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-    </div>
+    </section>
+
 </x-default-layout>
