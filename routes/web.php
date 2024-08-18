@@ -18,6 +18,10 @@ Route::get('test', function () {
     return ['message' => 'Hello', 'status' => 'ok', 'csrf' => @csrf_token() ];
 })->name('test');
 
+Route::get('halls', function () {
+    return view('halls');
+})->name('halls');
+
 Route::get('hall', function () {
     return view('hall');
 })->name('hall');
