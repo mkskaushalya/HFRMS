@@ -6,6 +6,6 @@ class HallController extends Controller
 {
     public function index()
     {
-        return view('hall.index');
+        return view('halls.index');
     }
 }
