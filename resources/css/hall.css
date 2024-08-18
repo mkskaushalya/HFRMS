@@ -1,0 +1,40 @@
+
+#hall-details .cont{
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+#hall-details .cont .left .hall-details h2{
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-light);
+}
+
+#hall-details .cont .left .hall-details p{
+    font-size: 1rem;
+    color: var(--text-light-2);
+}
+
+#hall-details .cont .right{
+    display: flex;
+    align-items: center;
+    column-gap: 1rem;
+}
+
+#hall-details .cont .right .price{
+    display: flex;
+    align-items: center;
+}
+
+#hall-details .cont .right .price h3{
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--text-light);
+}
+
+#hall-details .cont .right .price span{
+    font-size: 1.3rem;
+    font-weight: 600;
+    padding-left: 0.5rem;
+}

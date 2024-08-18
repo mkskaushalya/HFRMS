@@ -1,0 +1,83 @@
+
+:root{
+    --primary: #2c3e50;
+    --secondary: #f39c12;
+    --darkbg: #374151;
+    --lightbg: #ddd;
+    --danger: #e74c3c;
+    --success: #2ecc71;
+    --warning: #f1c40f;
+    --info: #3498db;
+    --dark: #34495e;
+    --light: #ecf0f1;
+    --white: #fff;
+    --black: #000;
+    --gray: #7f8c8d;
+    --gray-light: #bdc3c7;
+    --gray-dark: #2c3e50;
+    --gray-darker: #34495e;
+    --gray-lighter: #ecf0f1;
+
+    --bg-color: rgb(31 41 55);
+    --bg-color-2: rgb(44 62 80);
+
+    --text-light: #f5f5f5;
+    --text-dark: #34495e;
+    --text-gray: #7f8c8d;
+    --text-gray-light: #bdc3c7;
+    --text-light-2: #aaa;
+
+    --main-max-width: 80rem;
+
+    --border-radius: 0.25rem;
+
+    --transition: all 0.3s ease-in-out;
+}
+
+main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0;
+
+}
+section{
+    width: 100%;
+    max-width: var(--main-max-width);
+    /*background-color: #ddd;*/
+    padding: 1rem 2rem;
+}
+
+section .cont{
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+}
+section .cont .heading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+section .cont .heading h2{
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--white);
+}
+
+.button {
+    padding: 1rem 2rem;
+    width: 100%;
+    border: none;
+    background-color: var(--white);
+    color: var(--dark);
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.button:hover {
+    background-color: var(--text-light-2);
+}
