@@ -1,6 +1,6 @@
 
-:root{
-    --primary: #2c3e50;
+:root {
+    --primary: #4f46e5;
     --secondary: #f39c12;
     --darkbg: #374151;
     --lightbg: #ddd;
@@ -34,7 +34,7 @@
     --transition: all 0.3s ease-in-out;
 }
 
-main{
+main {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -42,24 +42,27 @@ main{
     padding: 1rem 0;
 
 }
-section{
+
+section {
     width: 100%;
     max-width: var(--main-max-width);
     /*background-color: #ddd;*/
     padding: 1rem 2rem;
 }
 
-section .cont{
+section .cont {
     display: flex;
     flex-direction: column;
     row-gap: 2rem;
 }
-section .cont .heading{
+
+section .cont .heading {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-section .cont .heading h2{
+
+section .cont .heading h2 {
     font-size: 2rem;
     font-weight: 600;
     color: var(--white);
