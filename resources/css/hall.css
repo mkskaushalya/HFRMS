@@ -135,6 +135,7 @@ section .cont .heading.smallh h2 {
 
 #hall-overview .cont p {
     color: var(--text-light-2);
+    line-height: 175%;
 }
 
 #hall-facilities .cont {
@@ -167,8 +168,96 @@ section .cont .heading.smallh h2 {
     color: var(--text-light);
 }
 
+
+.hall-availability .cont {
+    row-gap: 1rem;
+}
+
+.hall-availability .cont .availability {
+    display: flex;
+    width: 100%;
+}
+
+#hall-availability .cont .availability .search-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
+    background-color: var(--bg-color);
+    border-radius: var(--border-radius);
+}
+
+#hall-availability .cont .availability .search-form form {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    width: 100%;
+    padding: 2rem;
+
+}
+
+#hall-availability .cont .availability .search-form form .input-box {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 10rem;
+    justify-content: center;
+}
+
+#hall-availability .cont .availability .search-form form .input-box label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-light);
+
+}
+
+#hall-availability .cont .availability .search-form form .input-box select, #hall-availability .cont .availability .search-form form .input-box input {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    min-width: 15rem;
+    border: 1px solid var(--gray);
+    border-radius: var(--border-radius);
+    color-scheme: dark;
+    color: var(--text-light-2);
+    background-color: var(--bg-color);
+}
+
+#hall-availability .cont .availability .search-form form .input-box button {
+    padding: 0.5rem 2rem;
+    height: 3rem;
+    width: 100%;
+    border: none;
+    background-color: var(--white);
+    color: var(--dark);
+    font-weight: 600;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+#hall-availability .cont .availability .search-form form .input-box select option {
+    padding: 0.5rem;
+
+}
+
+
+#hall-availability .cont .availability .search-form form .input-box button:hover {
+    background-color: var(--text-light-2);
+}
+
+#hall-availability .cont .availability .search-form form .input-box button:disabled {
+    background-color: var(--gray);
+    cursor: not-allowed;
+}
+
+#hall-availability .cont .availability .search-form form .input-box button:disabled:hover {
+    background-color: var(--gray);
+}
+
+
 #hall-reviews .cont {
-    row-gap: 0.75rem;
+    row-gap: 1rem;
 }
 
 #hall-reviews .cont .reviews {
@@ -176,10 +265,10 @@ section .cont .heading.smallh h2 {
 }
 
 #hall-reviews .cont .reviews > .left {
-    width: 20rem;
+    width: 25rem;
     display: flex;
     flex-direction: column;
-    row-gap: 1rem;
+    row-gap: 1.5rem;
 }
 
 #hall-reviews .cont .reviews > .left .total-reviews-count {
@@ -222,8 +311,8 @@ section .cont .heading.smallh h2 {
 #hall-reviews .cont .reviews > .left .rating-bars {
     display: flex;
     flex-direction: column;
-    row-gap: 1rem;
-    max-width: 15rem;
+    row-gap: 1.5rem;
+    max-width: 20rem;
 
 }
 
@@ -250,7 +339,7 @@ section .cont .heading.smallh h2 {
 }
 
 #hall-reviews .cont .reviews > .left .rating-bars .rating-bar .bar {
-    height: 0.5rem;
+    height: 0.3rem;
     background-color: var(--gray);
     border-radius: var(--border-radius);
     position: relative;
@@ -258,14 +347,17 @@ section .cont .heading.smallh h2 {
 }
 
 #hall-reviews .cont .reviews > .left .rating-bars .rating-bar .bar .fill {
-    height: 0.5rem;
+    height: 0.3rem;
     background-color: var(--primary);
     border-radius: var(--border-radius);
 
 }
 
 #hall-reviews .cont .reviews > .right {
-    width: calc(100% - 20rem);
+    width: calc(100% - 25rem);
+    display: flex;
+    flex-direction: column;
+    row-gap: 2.5rem;
 }
 
 #hall-reviews .cont .reviews > .right .review {
@@ -273,4 +365,86 @@ section .cont .heading.smallh h2 {
     flex-direction: column;
     row-gap: 1rem;
 }
+
+#hall-reviews .cont .reviews > .right .review .details {
+    display: flex;
+    column-gap: 1rem;
+    align-items: center;
+}
+
+#hall-reviews .cont .reviews > .right .review .details .left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+#hall-reviews .cont .reviews > .right .review .details .left img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#hall-reviews .cont .reviews > .right .review .details .right {
+    display: flex;
+    flex-direction: column;
+}
+
+#hall-reviews .cont .reviews > .right .review .details .right h3 {
+    font-weight: 600;
+    color: var(--text-light);
+}
+
+#hall-reviews .cont .reviews > .right .review .details .right p {
+    font-size: 0.8rem;
+    color: var(--gray);
+}
+
+#hall-reviews .cont .reviews > .right .review .title h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+#hall-reviews .cont .reviews > .right .review .message p {
+    font-size: 0.9rem;
+    line-height: 175%;
+    color: var(--text-light-2);
+}
+
+#hall-reviews .cont .reviews > .right .review .star-rating {
+    display: flex;
+    align-items: center;
+    column-gap: 0.5rem;
+    font-size: 1rem;
+    color: var(--text-light);
+}
+
+#hall-reviews .cont .reviews > .right .review .star-rating .stars {
+    display: flex;
+    column-gap: 0.25rem;
+    align-items: center;
+}
+
+#hall-reviews .cont .reviews > .right .review .star-rating .stars .star {
+    width: 1.25rem;
+    height: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#hall-reviews .cont .reviews > .right .review .star-rating .stars .star svg {
+    width: 100%;
+    height: 100%;
+    fill: var(--primary);
+}
+
+
+
+
+
 
