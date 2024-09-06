@@ -1,17 +1,38 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+    <x-dashboard>
+        <x-slot:header>{{ __('Dashboard') }}</x-slot:header>
+        <x-slot:contentTitle> {{ __('Dashboard') }}</x-slot:contentTitle>
+        <x-slot:contentDescription> {{ __('Welcome to your dashboard!') }}</x-slot:contentDescription>
+        <div class="cont">
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
+            <a href="#" class="card">
+                <div class="card-title">
+                    <h3>Manage Halls</h3>
                 </div>
-            </div>
+                <div class="card-content">
+                    <p>You have 10 halls</p>
+                </div>
+            </a>
+
+            <a href="#" class="card">
+                <div class="card-title">
+                    <h3>Manage Users</h3>
+                </div>
+                <div class="card-content">
+                    <p>You have 10 users</p>
+                </div>
+            </a>
+
+            <a href="#" class="card">
+                <div class="card-title">
+                    <h3>Manage Bookings</h3>
+                </div>
+                <div class="card-content">
+                    <p>You have 10 bookings</p>
+                </div>
+            </a>
+
+            
         </div>
-    </div>
+    </x-dashboard>
 </x-app-layout>

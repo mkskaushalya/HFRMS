@@ -1,0 +1,218 @@
+section#dashboard {
+    max-width: 100%;
+    width: 100%;
+    padding: 0;
+    height: calc(100vh - 4rem - 1px);
+    display: flex;
+    justify-content: space-between;
+}
+
+#dashboard .side-menu {
+    width: 18rem;
+    height: 100%;
+    background-color: var(--bg-color);
+    overflow: auto;
+    padding: 1rem;
+}
+
+#dashboard .side-menu .title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+#dashboard .side-menu .title h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--white);
+}
+
+#dashboard .side-menu .profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    row-gap: 0.5rem;
+}
+
+#dashboard .side-menu .profile-info .user-img {
+    padding: 0.5rem;
+}
+
+#dashboard .side-menu .profile-info .user-img img {
+    width: 6.5rem;
+    height: 6.5rem;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+#dashboard .side-menu .profile-info .user-type h3 {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--white);
+    padding: 0.15rem 0.75rem;
+    border-radius: var(--border-radius);
+    background-color: var(--secondary);
+}
+
+#dashboard .side-menu .profile-info > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#dashboard .side-menu .profile-info .user-name h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-light);
+}
+
+#dashboard .side-menu .profile-info .since-date {
+    padding: 0;
+}
+
+#dashboard .side-menu .profile-info .since-date p {
+    font-size: 0.7rem;
+    color: var(--gray);
+    padding: 0;
+    line-height: 0.5;
+}
+
+#dashboard .side-menu .menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 1rem 0;
+}
+
+#dashboard .side-menu .menu ul {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+#dashboard .side-menu .menu ul li {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: var(--border-radius);
+
+}
+
+#dashboard .side-menu .menu ul li a {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 0.75rem;
+    width: 100%;
+    border-radius: var(--border-radius);
+    color: var(--white);
+    font-size: 1rem;
+    font-weight: 600;
+    transition: var(--transition);
+    border: 2px solid transparent;
+}
+
+#dashboard .side-menu .menu ul li.active a {
+    background-color: #55f1;
+    color: var(--primary);
+}
+
+#dashboard .side-menu .menu ul li a:hover {
+    border: 2px solid var(--primary);
+}
+
+#dashboard .content {
+    width: calc(100% - 18rem);
+    height: 100%;
+    padding: 4rem;
+}
+
+#dashboard .content .title {
+    display: flex;
+    row-gap: 0.5rem;
+    flex-direction: column;
+
+}
+
+#dashboard .content .title h2 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--text-light);
+}
+
+#dashboard .content .title p {
+    font-size: 0.9rem;
+    color: var(--gray);
+    line-height: 175%;
+}
+
+#dashboard .content .cont {
+    flex-direction: row;
+    gap: 1rem;
+    padding-top: 2rem;
+    flex-wrap: wrap;
+    overflow: auto;
+    height: calc(100% - 10px);
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+#dashboard .content .cont::-webkit-scrollbar {
+    display: none;
+}
+
+#dashboard .content .cont .card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    align-items: center;
+    justify-content: center;
+    width: calc(25% - 3rem / 4);
+    min-height: 10rem;
+    padding: 1rem;
+    height: 10rem;
+    min-width: 12rem;
+    border-radius: var(--border-radius);
+    border: 2px solid var(--bg-color);
+    background-color: var(--bg-color);
+    transition: var(--transition);
+}
+
+#dashboard .content .cont .card:hover {
+    background-color: var(--bg-color-hover);
+    cursor: pointer;
+    border: 2px solid var(--primary);
+}
+
+
+#dashboard .content .cont .card > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#dashboard .content .cont .card div h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-light);
+    transition: var(--transition);
+}
+
+#dashboard .content .cont .card:hover div h3 {
+    color: var(--primary);
+}
+
+#dashboard .content .cont .card div p {
+    font-size: 0.9rem;
+    color: var(--gray);
+}
+

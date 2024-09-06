@@ -24,5 +24,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'mkskaushalya@gmail.com',
             'password' => bcrypt('12345678'),
         ]);
+
+
     }
 }

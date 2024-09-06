@@ -10,19 +10,18 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('halls', function (Blueprint $table) {
+        Schema::create('hall_images', function (Blueprint $table) {
             $table->id();
-            $table->string('hall_number');
-            $table->string('name');
-            $table->string('location');
-            $table->integer('capacity');
+            $table->foreignId('hall_id')->constrained()->onDelete('cascade');
+            $table->string('title');
+            $table->string('file_name');
+            $table->string('file_path');
+            $table->string('file_url');
+            $table->string('file_extension');
             $table->text('description');
             $table->string('status')->default('active');
-            $table->string('image')->nullable();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
-
     }
 
     /**
@@ -30,6 +29,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('halls');
+        Schema::dropIfExists('hall_images');
     }
 };
