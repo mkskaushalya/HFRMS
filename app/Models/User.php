@@ -38,6 +38,22 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function halls()
+    {
+        return $this->hasMany(Hall::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function hallImages()
+    {
+        return $this->hasMany(HallImage::class);
+    }
+
+
     /**
      * Get the attributes that should be cast.
      *
@@ -50,4 +66,5 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
 }

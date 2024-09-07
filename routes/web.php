@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\HallController;
 use App\Http\Controllers\ProfileController;
-use App\Models\Hall;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,11 +19,8 @@ Route::get('test', function () {
     return ['message' => 'Hello', 'status' => 'ok', 'csrf' => @csrf_token()];
 })->name('test');
 
-Route::get('halls', function () {
-    $halls = Hall::all();
-    dd($halls[0]->description);
-    return view('halls');
-})->name('halls');
+Route::get('halls', [HallController::class, 'index'])->name('halls.index');
+
 
 Route::get('hall', function () {
     return view('hall');

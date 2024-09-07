@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('hall_number');
             $table->string('name');
-            $table->string('location');
+            $table->foreignId('hall_location_id')->constrained()->onDelete('cascade');
             $table->integer('capacity');
             $table->text('description');
             $table->string('status')->default('active');
@@ -22,6 +22,7 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
+
 
     }
 

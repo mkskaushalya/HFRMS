@@ -75,7 +75,7 @@ section .cont .heading h2 {
 
 .button {
     padding: 1rem 2rem;
-    width: 100%;
+    width: auto;
     border: none;
     background-color: var(--white);
     color: var(--dark);

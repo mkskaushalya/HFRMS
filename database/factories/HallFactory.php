@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\Hall;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Hall>
+ * @extends Factory<Hall>
  */
 class HallFactory extends Factory
 {
@@ -19,7 +20,7 @@ class HallFactory extends Factory
         return [
             'name' => fake()->company(),
             'hall_number' => fake()->unique()->numberBetween(100, 999),
-            'location' => fake()->address,
+            'hall_location_id' => fake()->numberBetween(1, 4),
             'capacity' => fake()->numberBetween(20, 500),
             'description' => fake()->paragraph,
             'status' => 'active',

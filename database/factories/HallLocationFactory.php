@@ -2,12 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Models\HallLocation;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\HallImage>
+ * @extends Factory<HallLocation>
  */
-class HallImageFactory extends Factory
+class HallLocationFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,11 +18,8 @@ class HallImageFactory extends Factory
     public function definition(): array
     {
         return [
-            'hall_id' => fake()->numberBetween(1, 10),
-            'user_id' => 1,
-            'title' => fake()->sentence,
+            'location' => fake()->city,
             'status' => 'active',
-            'url' => fake()->imageUrl(),
         ];
     }
 }
