@@ -53,6 +53,11 @@ class User extends Authenticatable
         return $this->hasMany(HallImage::class);
     }
 
+    public function hallBookings()
+    {
+        return $this->hasMany(HallBooking::class);
+    }
+
 
     /**
      * Get the attributes that should be cast.
