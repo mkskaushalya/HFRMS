@@ -1,4 +1,5 @@
 section#dashboard {
+    position: relative;
     max-width: 100%;
     width: 100%;
     padding: 0;
@@ -53,6 +54,13 @@ section#dashboard {
     color: var(--white);
     padding: 0.15rem 0.75rem;
     border-radius: var(--border-radius);
+}
+
+#dashboard .side-menu .profile-info .user-type.admin h3 {
+    background-color: var(--success);
+}
+
+#dashboard .side-menu .profile-info .user-type.user h3 {
     background-color: var(--secondary);
 }
 
@@ -132,6 +140,13 @@ section#dashboard {
     width: calc(100% - 18rem);
     height: 100%;
     padding: 4rem;
+    overflow: auto;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+#dashboard .content::-webkit-scrollbar {
+    display: none;
 }
 
 #dashboard .content .title {
@@ -141,10 +156,12 @@ section#dashboard {
 
 }
 
-#dashboard .content .title h2 {
+#dashboard .content .title h2, #dashboard .content .title h2 span {
     font-size: 1.6rem;
     font-weight: 600;
-    color: var(--text-light);
+    color: var(--white);
+    display: flex;
+    justify-content: space-between;
 }
 
 #dashboard .content .title p {
@@ -153,10 +170,11 @@ section#dashboard {
     line-height: 175%;
 }
 
-#dashboard .content .cont {
+#dashboard .content > .cont {
+    width: 100%;
     flex-direction: row;
     gap: 1rem;
-    padding-top: 2rem;
+    padding-top: 1rem;
     flex-wrap: wrap;
     overflow: auto;
     height: calc(100% - 10px);
@@ -167,6 +185,7 @@ section#dashboard {
 #dashboard .content .cont::-webkit-scrollbar {
     display: none;
 }
+
 
 #dashboard .content .cont .card {
     display: flex;
@@ -214,5 +233,143 @@ section#dashboard {
 #dashboard .content .cont .card div p {
     font-size: 0.9rem;
     color: var(--gray);
+}
+
+#dashboard .content .header {
+    padding-top: 1rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#dashboard .content .header > div, #dashboard .content .header .search-bar .search-box {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+#dashboard .content .header .search-bar .search-box input {
+    height: 2rem;
+}
+
+#dashboard .content .dashcont {
+    margin-top: 1rem;
+    overflow: auto;
+    height: calc(100% - 10px - 3rem);
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+#dashboard .content .dashcont::-webkit-scrollbar {
+    display: none;
+}
+
+#dashboard .content .dashcont table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+#dashboard .content .dashcont table thead {
+    background-color: var(--bg-color);
+    color: var(--text-light);
+}
+
+#dashboard .content .dashcont table thead th {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: center;
+    border-bottom: 2px solid var(--bg-color);
+}
+
+#dashboard .content .dashcont table tbody tr {
+    background-color: var(--bg-color-2);
+    color: var(--text-light);
+    transition: var(--transition);
+}
+
+#dashboard .content .dashcont table tbody tr:hover {
+    background-color: var(--primary);
+}
+
+#dashboard .content .dashcont table tbody tr td {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    text-align: center;
+    border-bottom: 2px solid var(--bg-color-2);
+}
+
+#dashboard .content .cont .hall {
+    width: 100%;
+}
+
+#dashboard .content .cont .hall .hall-info {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+#dashboard .content .cont .hall .hall-info p {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-light);
+}
+
+#dashboard .content .cont .hall .actions {
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+#dashboard .content .cont form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#dashboard .content .cont form .input-box {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.1rem;
+
+}
+
+#dashboard .content .cont form .input-box label {
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+#dashboard .content .cont form .input-box input, #dashboard .content .cont form .input-box select, #dashboard .content .cont form .input-box textarea {
+    height: 3rem;
+    padding: 0.5rem;
+    border-radius: var(--border-radius);
+    border: 2px solid var(--bg-color);
+    background-color: var(--bg-color);
+    color: var(--text-light);
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+#dashboard .content .cont form .input-box textarea {
+    min-height: 4rem;
+    max-height: 10rem;
+}
+
+#dashboard .content .cont form .input-box button {
+    height: 3rem;
+    max-height: 3rem;
+    padding: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
 }
 
