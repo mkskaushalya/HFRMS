@@ -39,6 +39,17 @@
     padding-left: 0.5rem;
 }
 
+#hall-gallery {
+    width: 100%;
+    max-width: 100%;
+}
+
+#hall-gallery .cont {
+    display: flex;
+    flex-direction: column;
+    
+}
+
 #hall-gallery .cont .gallery {
     max-height: 500px;
     position: relative;
