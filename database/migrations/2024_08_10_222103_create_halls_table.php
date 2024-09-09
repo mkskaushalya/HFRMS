@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->string('name');
             $table->foreignId('hall_location_id')->constrained()->onDelete('cascade');
             $table->integer('capacity');
+            $table->integer('price')->default(25000);
             $table->text('description');
             $table->string('status')->default('active');
             $table->string('image')->nullable();
