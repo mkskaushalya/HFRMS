@@ -22,6 +22,7 @@ class HallFactory extends Factory
             'hall_number' => fake()->unique()->numberBetween(100, 999),
             'hall_location_id' => fake()->numberBetween(1, 4),
             'capacity' => fake()->numberBetween(20, 500),
+            'price' => fake()->numberBetween(15000, 50000),
             'description' => fake()->paragraph,
             'status' => 'active',
             'image' => fake()->imageUrl(),
