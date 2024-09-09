@@ -17,10 +17,9 @@
                     <div class="input-box">
                         <label for="location">Location</label>
                         <select name="location" id="location">
-                            <option value="1">Location 1</option>
-                            <option value="2">Location 2</option>
-                            <option value="3">Location 3</option>
-                            <option value="4">Location 4</option>
+                            @foreach($locations as $location )
+                                <option value="{{ $location->id }}">{{ $location->location }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="input-box">
