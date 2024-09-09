@@ -1,3 +1,8 @@
+@php
+    use Carbon\Traits\Date;use Illuminate\Support\Facades\Auth;
+    $user = Auth::user();
+
+@endphp
 <section id="dashboard">
     <div class="side-menu">
         <div class="title">
@@ -5,16 +10,20 @@
         </div>
         <div class="profile-info">
             <div class="user-img">
-                <img src="img/avatar.png" alt="user">
+                <img src="{{ $user->profile_picture }}" alt="user">
             </div>
-            <div class="user-type">
-                <h3>Admin</h3>
+            <div class="user-type {{ $user->usertype }}">
+                @if($user->usertype == 'admin')
+                    <h3>Admin</h3>
+                @elseif($user->usertype == 'user')
+                    <h3>User</h3>
+                @endif
             </div>
             <div class="user-name">
-                <h3>John Doe</h3>
+                <h3>{{ $user->firstname }} {{ $user->lastname }}</h3>
             </div>
             <div class="since-date">
-                <p>Member since 2021</p>
+                <p>Member since {{ $user->created_at->format('Y') }}</p>
             </div>
         </div>
         <hr class="divider">
@@ -51,7 +60,11 @@
     </div>
     <div class="content">
         <div class="title">
-            <h2>{{ $contentTitle }}</h2>
+            <h2><span>{{ $contentTitle }}</span>
+                <button class="button" onclick="location.href = '{{ url()->previous() }}'"
+                        style="background-color: var(--secondary); color: var(--white)">Back
+                </button>
+            </h2>
             <p>{{ $contentDescription }}</p>
         </div>
         {{ $slot }}
