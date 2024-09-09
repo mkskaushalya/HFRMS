@@ -12,7 +12,9 @@ class Hall extends Model
 
     protected $fillable = [
         'name',
+        'hall_number',
         'description',
+        'hall_location_id',
         'capacity',
         'price',
         'status',
@@ -20,12 +22,13 @@ class Hall extends Model
         'user_id',
     ];
 
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function images()
+    public function hallImages()
     {
         return $this->hasMany(HallImage::class);
     }
@@ -35,9 +38,15 @@ class Hall extends Model
         return $this->hasMany(Review::class);
     }
 
-    public function location()
+    public function hallLocation()
     {
         return $this->belongsTo(HallLocation::class);
     }
+
+    public function bookings()
+    {
+        return $this->hasMany(HallBooking::class);
+    }
+
 
 }
