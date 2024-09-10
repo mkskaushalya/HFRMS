@@ -177,7 +177,7 @@ section#dashboard {
     padding-top: 1rem;
     flex-wrap: wrap;
     overflow: auto;
-    height: calc(100% - 10px);
+    max-height: calc(100% - 10px);
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
 }
