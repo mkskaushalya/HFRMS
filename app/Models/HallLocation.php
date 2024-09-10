@@ -15,7 +15,7 @@ class HallLocation extends Model
         'status',
     ];
 
-    public function hall()
+    public function halls()
     {
         return $this->hasMany(Hall::class);
     }
