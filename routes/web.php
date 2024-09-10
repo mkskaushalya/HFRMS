@@ -11,13 +11,11 @@ Route::view('/', 'home')->name('home');
 Route::view('about', 'about')->name('about');
 Route::view('contact', 'contact')->name('contact');
 
-
-Route::get('halls', [HallController::class, 'index'])->name('halls.index');
-
-
-Route::get('hall', function () {
-    return view('hall');
-})->name('hall');
+//Hall Routes
+Route::controller(HallController::class)->group(function () {
+    Route::get('halls', 'index')->name('halls');
+    Route::get('halls/{hall}', 'show')->name('halls.show');
+});
 
 
 //Dashboard Routes
