@@ -16,6 +16,16 @@
                 <form method="POST" action="{{ route('dashboard.halls') }}">
                     @csrf
 
+                    @if($errors->any())
+                        <div class="input-box">
+                            <ul>
+                                @foreach($errors->all() as $error)
+                                    <li style="color: red">{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <div class="input-box">
                         <label for="hall_number">Hall Number *</label>
                         <input type="text" name="hall_number" id="hall_number" placeholder="Enter Hall Number" required>
