@@ -55,7 +55,7 @@
                                     onclick="location.href ='{{ route('dashboard.halls.show', $hall) }}';">{{ $hall->capacity }}</td>
                                 <td style="cursor: pointer"
                                     onclick="location.href ='{{ route('dashboard.halls.show', $hall) }}';">{{ $hall->price }}</td>
-                                <td>
+                                <td class="tbl_action">
                                     <button onclick="location.href ='{{ route('dashboard.halls.edit', $hall) }}';"
                                             class="button edit">
                                         Edit
