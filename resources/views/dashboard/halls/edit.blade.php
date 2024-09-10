@@ -17,6 +17,16 @@
                     @csrf
                     @method('PATCH')
 
+                    @if($errors->any())
+                        <div class="input-box">
+                            <ul>
+                                @foreach($errors->all() as $error)
+                                    <li style="color: red">{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <div class="input-box">
                         <label for="hall_number">Hall Number *</label>
                         <input type="text" value="{{ $hall->hall_number }}" name="hall_number" id="hall_number"
