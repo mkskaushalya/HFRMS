@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Hall;
+use App\Models\HallBooking;
 use App\Models\HallImage;
 use App\Models\Review;
 use App\Models\User;
@@ -41,11 +42,12 @@ class DatabaseSeeder extends Seeder
             'usertype' => 'admin',
         ]);
 
+        User::factory(10)->create();
         $this->call(HallLocationSeeder::class);
         Hall::factory(10)->create();
         HallImage::factory(50)->create();
         Review::factory(50)->create();
-
+        HallBooking::factory(50)->create();
 
     }
 }
