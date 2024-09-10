@@ -10,10 +10,20 @@
         <x-slot:contentDescription> {{ __('Welcome to users management dashboard.') }}</x-slot:contentDescription>
         @if($usertype == 'admin')
             <div class="cont">
-                <form method="POST" action="{{ route('dashboard.users.show', $user)}}">
+                <form method="POST" autocomplete="off" action="{{ route('dashboard.users.show', $user)}}">
                     @csrf
                     @method('PATCH')
 
+
+                    @if($errors->any())
+                        <div class="input-box">
+                            <ul>
+                                @foreach($errors->all() as $error)
+                                    <li style="color: red">{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <div class="input-box">
                         <label for="firstname">First Name *</label>
                         <input type="text" value="{{ $user->firstname }}" name="firstname" id="firstname"
@@ -33,14 +43,28 @@
                     </div>
 
                     <div class="input-box">
+                        <label for="address">Address *</label>
+                        <input type="text" name="address" value="{{ $user->address }}" id="address"
+                               placeholder="Enter Address" required>
+                    </div>
+
+                    <div class="input-box">
                         <label for="email">Email *</label>
                         <input type="email" name="email" value="{{ $user->email }}" id="email"
                                placeholder="user@email.com" required>
                     </div>
 
                     <div class="input-box">
-                        <label for="password">Password *</label>
-                        <input type="password" name="password" id="password" placeholder="Password" required>
+                        <label for="password">Password * (If you do not want to change the password, leave that box
+                            blank.) </label>
+                        <input type="password" name="password" value="" id="password" placeholder="Password"
+                               required>
+                    </div>
+
+                    <div class="input-box">
+                        <label for="status">Confirm Password *</label>
+                        <input type="password" name="password_confirmation" id="password" placeholder="Confirm Password"
+                               required>
                     </div>
 
                     <div class="input-box">
