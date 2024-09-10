@@ -29,28 +29,43 @@
         <hr class="divider">
         <div class="menu">
             <ul>
-                <li class="active">
-                    <a href="">
+                <li class="{{ Request::routeIs('dashboard') ? 'active' : ''}}">
+                    <a href="{{route('dashboard')}}">
                         <i class="fas fa-tachometer-alt"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
-                <li>
-                    <a href="">
+                <li class="{{ Request::routeIs('dashboard.halls') || Request::routeIs('dashboard.halls.*') ? 'active' : ''}}">
+                    <a href="{{ route('dashboard.halls') }}">
+                        <i class="fas fa-users"></i>
+                        <span>Halls</span>
+                    </a>
+                </li>
+                <li class="{{ Request::routeIs('dashboard.users') || Request::routeIs('dashboard.users.*') ? 'active' : ''}}">
+                    <a href="{{route('dashboard.users')}}">
                         <i class="fas fa-users"></i>
                         <span>Users</span>
                     </a>
                 </li>
-                <li>
-                    <a href="">
+                <li class="{{ Request::routeIs('dashboard.bookings') || Request::routeIs('dashboard.bookings.*') ? 'active' : ''}}">
+                    <a href="{{route('dashboard.bookings')}}">
                         <i class="fas fa-cogs"></i>
-                        <span>Settings</span>
+                        <span>Bookings</span>
                     </a>
                 </li>
-                <li>
-                    <a href="">
+                <li class="{{ Request::routeIs('profile.edit') ? 'active' : ''}}">
+                    <a href="{{ route('profile.edit') }}">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+                <li class="{{ Request::routeIs('logout') ? 'active' : ''}}">
+                    <a style="cursor: pointer" onclick="document.getElementById('logoutForm').submit();">
                         <i class="fas fa-sign-out-alt"></i>
                         <span>Logout</span>
+                        <form method="POST" id="logoutForm" action="{{ route('logout') }}">
+                            @csrf
+                        </form>
                     </a>
                 </li>
 
