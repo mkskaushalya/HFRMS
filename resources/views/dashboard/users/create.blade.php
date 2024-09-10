@@ -14,6 +14,16 @@
                 <form method="POST" action="{{ route('dashboard.users') }}">
                     @csrf
 
+                    @if($errors->any())
+                        <div class="input-box">
+                            <ul>
+                                @foreach($errors->all() as $error)
+                                    <li style="color: red">{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <div class="input-box">
                         <label for="firstname">First Name *</label>
                         <input type="text" name="firstname" id="firstname" placeholder="Sahan" required>
@@ -30,6 +40,11 @@
                     </div>
 
                     <div class="input-box">
+                        <label for="address">Address *</label>
+                        <input type="text" name="address" id="address" placeholder="Enter Address" required>
+                    </div>
+
+                    <div class="input-box">
                         <label for="email">Email *</label>
                         <input type="email" name="email" id="email" placeholder="user@email.com" required>
                     </div>
@@ -37,6 +52,12 @@
                     <div class="input-box">
                         <label for="password">Password *</label>
                         <input type="password" name="password" id="password" placeholder="Password" required>
+                    </div>
+
+                    <div class="input-box">
+                        <label for="status">Confirm Password *</label>
+                        <input type="password" name="password_confirmation" id="password" placeholder="Confirm Password"
+                               required>
                     </div>
 
                     <div class="input-box">
