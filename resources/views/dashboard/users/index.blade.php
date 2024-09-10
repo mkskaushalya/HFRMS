@@ -53,17 +53,17 @@
                                     onclick="location.href ='{{ route('dashboard.users.show', $user) }}';">{{ $user->email }}</td>
                                 <td style="cursor: pointer"
                                     onclick="location.href ='{{ route('dashboard.users.show', $user) }}';">{{ $user->usertype }}</td>
-                                <td>
+                                <td class="tbl_action">
                                     <button onclick="location.href ='{{ route('dashboard.users.edit', $user) }}';"
                                             class="button edit">
                                         Edit
                                     </button>
                                     <button class="button delete"
-                                            onclick="return confirm('Are you sure you want to delete this hall?')"
+                                            onclick="return confirm('Are you sure you want to delete this user?')"
                                             form="delete_hall_{{$user->id }}">Delete
                                     </button>
                                     <form id="delete_hall_{{$user->id}}"
-                                          action="{{ route('dashboard.halls.destroy', $user) }}" method="POST"
+                                          action="{{ route('dashboard.users.destroy', $user) }}" method="POST"
                                           style="display: none">
                                         @csrf
                                         @method('DELETE')
