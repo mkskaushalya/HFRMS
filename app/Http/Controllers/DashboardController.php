@@ -20,7 +20,7 @@ class DashboardController extends Controller
     public function __construct()
     {
         $this->users = User::all();
-        $this->bookings = HallBooking::all();
+        $this->bookings = HallBooking::all()->reverse();
         $this->halls = Hall::all();
         $this->user = Auth::user();
     }
@@ -141,48 +141,25 @@ class DashboardController extends Controller
 
     public function storeUser(Request $request): RedirectResponse
     {
-        if ($request->password) {
-            $request->validate([
-                'firstname' => ['required', 'string', 'max:255'],
-                'lastname' => ['required', 'string', 'max:255'],
-                'phone' => ['required', 'string', 'max:255'],
-                'address' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-                'password' => ['required', 'confirmed', Rules\Password::defaults()],
-                'usertype' => ['required'],
-            ]);
+        $data = $request->validate([
+            'firstname' => ['required', 'string', 'max:255'],
+            'lastname' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:255'],
+            'address' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'usertype' => ['required'],
+        ]);
 
-            $user = User::create([
-                'firstname' => $request->firstname,
-                'lastname' => $request->lastname,
-                'phone' => $request->phone,
-                'address' => $request->address,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'usertype' => $request->usertype,
-            ]);
-        } else {
-
-            $request->validate([
-                'firstname' => ['required', 'string', 'max:255'],
-                'lastname' => ['required', 'string', 'max:255'],
-                'phone' => ['required', 'string', 'max:255'],
-                'address' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-                'usertype' => ['required'],
-            ]);
-
-            $user = User::create([
-                'firstname' => $request->firstname,
-                'lastname' => $request->lastname,
-                'phone' => $request->phone,
-                'address' => $request->address,
-                'email' => $request->email,
-                'usertype' => $request->usertype,
-            ]);
-
-        }
-
+        User::create([
+            'firstname' => $data['firstname'],
+            'lastname' => $data['lastname'],
+            'phone' => $data['phone'],
+            'address' => $data['address'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'usertype' => $data['usertype'],
+        ]);
 
         return response()->redirectToRoute('dashboard.users');
     }
@@ -194,44 +171,48 @@ class DashboardController extends Controller
 
     public function updateUser(User $user): RedirectResponse
     {
-        $data = request()->validate([
-            'firstname' => ['required', 'string', 'max:255'],
-            'lastname' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'string', 'max:255'],
-            'address' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'usertype' => ['required'],
-        ]);
+        if (request('password') and request('password_confirmation') and request('password') !== '' and request('password_confirmation') !== '' and request('password') === request('password_confirmation')) {
+            $data = request()->validate([
+                'firstname' => ['required', 'string', 'max:255'],
+                'lastname' => ['required', 'string', 'max:255'],
+                'phone' => ['required', 'string', 'max:255'],
+                'address' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class . ',email,' . $user->id],
+                'password' => ['required', 'confirmed', Rules\Password::defaults()],
+                'usertype' => ['required'],
+            ]);
 
-        $user = User::create([
-            'firstname' => $data['firstname'],
-            'lastname' => $data['lastname'],
-            'phone' => $data['phone'],
-            'address' => $data['address'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password)']),
-            'usertype' => $data['usertype'],
-        ]);
+            $user->update([
+                'firstname' => $data['firstname'],
+                'lastname' => $data['lastname'],
+                'phone' => $data['phone'],
+                'address' => $data['address'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'usertype' => $data['usertype'],
+            ]);
 
+        } else {
+            $data = request()->validate([
+                'firstname' => ['required', 'string', 'max:255'],
+                'lastname' => ['required', 'string', 'max:255'],
+                'phone' => ['required', 'string', 'max:255'],
+                'address' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class . ',email,' . $user->id],
+                'usertype' => ['required'],
+            ]);
 
-        $data = request()->validate([
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'phone' => 'required',
-            'email' => 'required|email',
-            'usertype' => 'required',
-        ]);
+            $user->update([
+                'firstname' => $data['firstname'],
+                'lastname' => $data['lastname'],
+                'phone' => $data['phone'],
+                'address' => $data['address'],
+                'email' => $data['email'],
+                'usertype' => $data['usertype'],
+            ]);
+        }
 
-        $user->update([
-            'firstname' => $data['firstname'],
-            'lastname' => $data['lastname'],
-            'phone' => $data['phone'],
-            'email' => $data['email'],
-            'usertype' => $data['usertype'],
-        ]);
-
-        return response()->redirectTo(route('dashboard.users'));
+        return response()->redirectTo(route('dashboard.users.show', $user));
     }
 
     public function destroyUser(User $user): RedirectResponse
@@ -246,7 +227,111 @@ class DashboardController extends Controller
     //Booking management
     public function bookings(): Response
     {
-        return response()->view('dashboard.bookings.index');
+        return response()->view('dashboard.bookings.index', ['bookings' => $this->bookings]);
     }
+
+    public function showBooking(HallBooking $booking): Response
+    {
+        return response()->view('dashboard.bookings.show', ['booking' => $booking, 'halls' => $this->halls, 'users' => $this->users]);
+    }
+
+    public function createBooking(): Response
+    {
+        return response()->view('dashboard.bookings.create', ['halls' => $this->halls, 'users' => $this->users]);
+    }
+
+    public function storeBooking(): RedirectResponse
+    {
+        $data = request()->validate([
+            'hall' => 'required',
+            'user' => 'required',
+            'booking_date' => 'required',
+            'start_time' => 'required',
+            'end_time' => 'required',
+            'status' => 'required',
+            'purpose' => 'required',
+            'description' => 'required',
+            'payment' => 'required',
+
+        ]);
+
+        HallBooking::create([
+            'hall_id' => $data['hall'],
+            'user_id' => $data['user'],
+            'booking_date' => $data['booking_date'],
+            'start_time' => $data['start_time'],
+            'end_time' => $data['end_time'],
+            'purpose' => $data['purpose'],
+            'description' => $data['description'],
+            'payment' => $data['payment'],
+            'status' => $data['status'],
+        ]);
+
+        return response()->redirectToRoute('dashboard.bookings');
+    }
+
+    public function editBooking(HallBooking $booking): Response
+    {
+        return response()->view('dashboard.bookings.edit', ['booking' => $booking, 'halls' => $this->halls, 'users' => $this->users]);
+    }
+
+    public function updateBooking(HallBooking $booking): RedirectResponse
+    {
+        $data = request()->validate([
+            'hall' => 'required',
+            'user' => 'required',
+            'booking_date' => 'required',
+            'start_time' => 'required',
+            'end_time' => 'required',
+            'status' => 'required',
+            'purpose' => 'required',
+            'description' => 'required',
+            'payment' => 'required',
+        ]);
+
+        $booking->update([
+            'hall_id' => $data['hall'],
+            'user_id' => $data['user'],
+            'booking_date' => $data['booking_date'],
+            'start_time' => $data['start_time'],
+            'end_time' => $data['end_time'],
+            'purpose' => $data['purpose'],
+            'description' => $data['description'],
+            'payment' => $data['payment'],
+            'status' => $data['status'],
+        ]);
+
+        return response()->redirectTo(route('dashboard.bookings.show', $booking));
+    }
+
+    public function destroyBooking(HallBooking $booking): RedirectResponse
+    {
+        $booking->delete();
+
+        return response()->redirectToRoute('dashboard.bookings');
+    }
+
+    public function approveBooking(HallBooking $booking)
+    {
+
+        $booking->update([
+            'status' => 'approved',
+        ]);
+
+        return back();
+
+    }
+
+    public function rejectBooking(HallBooking $booking)
+    {
+
+        $booking->update([
+            'status' => 'rejected',
+        ]);
+
+        return back();
+
+    }
+
     //End Booking management
 }
