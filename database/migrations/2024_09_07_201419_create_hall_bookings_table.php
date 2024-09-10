@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->string('status')->default('pending');
             $table->string('purpose');
             $table->string('description');
-            $table->string('booking_status');
+            $table->integer('payment')->default(0);
             $table->timestamps();
         });
     }
