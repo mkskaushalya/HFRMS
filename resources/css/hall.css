@@ -40,14 +40,14 @@
 }
 
 #hall-gallery {
-    width: 100%;
-    max-width: 100%;
+    /*width: 100%;*/
+    /*max-width: 100%;*/
 }
 
 #hall-gallery .cont {
     display: flex;
     flex-direction: column;
-    
+
 }
 
 #hall-gallery .cont .gallery {
@@ -144,6 +144,23 @@ section .cont .heading.smallh h2 {
     font-size: 1.3rem;
 }
 
+section .cont .heading.smallh span {
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    font-size: 1.3rem;
+    color: var(--white);
+}
+
+section .cont .heading.smallh span.available {
+    background-color: var(--success);
+}
+
+section .cont .heading.smallh span.unavailable {
+    background-color: var(--danger);
+}
+
+
 #hall-overview .cont p {
     color: var(--text-light-2);
     line-height: 175%;
@@ -180,12 +197,14 @@ section .cont .heading.smallh h2 {
 }
 
 
-.hall-availability .cont {
+#hall-availability .cont {
     row-gap: 1rem;
 }
 
-.hall-availability .cont .availability {
+#hall-availability .cont .availability {
     display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
     width: 100%;
 }
 
