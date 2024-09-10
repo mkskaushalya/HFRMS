@@ -1,53 +1,112 @@
 @php
     use Illuminate\Support\Facades\Auth;
     $usertype = Auth::user()->usertype;
+
 @endphp
 <x-app-layout>
     <x-dashboard>
-        <x-slot:header>{{ __('Dashboard') }}</x-slot:header>
-        <x-slot:contentTitle> {{ __('Dashboard') }}</x-slot:contentTitle>
-        <x-slot:contentDescription> {{ __('Welcome to your dashboard!') }}</x-slot:contentDescription>
-        <div class="cont">
+        <x-slot:header>{{ __('Dashboard') }} </x-slot:header>
+        <x-slot:contentTitle> {{ __('Booking Management') }}</x-slot:contentTitle>
+        <x-slot:contentDescription> {{ __('Welcome to booking management dashboard.') }}</x-slot:contentDescription>
+        @if($usertype == 'admin')
+            <div class="header">
+                <div class="add-btn">
+                    <a href="{{ route('dashboard.bookings.create') }}" class="button">Add Booking</a>
+                </div>
+                <div class="search-bar">
+                    <div class="search-box">
+                        <input type="search">
+                    </div>
+                    <div class="search-btn button">Search</div>
+                </div>
+            </div>
+            <div class="dashcont">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Hall</th>
+                        <th>User</th>
+                        <th>Booking Date</th>
+                        <th>Booking Time</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @if($bookings->isEmpty())
+                        <tr>
+                            <td colspan="9">No booking found</td>
+                        </tr>
 
-            @if($usertype == 'admin')
-                <a href="{{ route('dashboard.halls') }}" class="card">
-                    <div class="card-title">
-                        <h3>Manage Halls</h3>
-                    </div>
-                    <div class="card-content">
-                        <p>You have 10 halls</p>
-                    </div>
-                </a>
+                    @else
+                        @foreach($bookings as $booking)
 
-                <a href="{{ route('dashboard.users') }}" class="card">
-                    <div class="card-title">
-                        <h3>Manage Users</h3>
-                    </div>
-                    <div class="card-content">
-                        <p>You have 10 users</p>
-                    </div>
-                </a>
+                            <tr>
+                                <td style="cursor: pointer"
+                                    onclick="location.href ='{{ route('dashboard.bookings.show', $booking) }}';">{{ $booking->id }}</td>
+                                <td style="cursor: pointer"
+                                    onclick="location.href ='{{ route('dashboard.bookings.show', $booking) }}';">{{ $booking->hall->name }}</td>
+                                <td style="cursor: pointer"
+                                    onclick="location.href ='{{ route('dashboard.bookings.show', $booking) }}';">{{ $booking->user->firstname }} {{ $booking->user->lastname }}</td>
+                                <td style="cursor: pointer"
+                                    onclick="location.href ='{{ route('dashboard.bookings.show', $booking) }}';">{{ $booking->booking_date }}</td>
+                                <td style="cursor: pointer"
+                                    onclick="location.href ='{{ route('dashboard.bookings.show', $booking) }}';">{{ $booking->start_time }}
+                                    - {{ $booking->end_time }}</td>
+                                <td style="cursor: pointer"
+                                    onclick="location.href ='{{ route('dashboard.bookings.show', $booking) }}';"
+                                    class="status"><span class="{{$booking->status}}">{{ $booking->status }}</span></td>
+                                <td class="tbl_action">
+                                    <button form="approve_booking_{{$booking->id }}"
+                                            class="button success">Approve
+                                    </button>
+                                    <form id="approve_booking_{{$booking->id}}"
+                                          action="{{ route('dashboard.bookings.approve', $booking) }}"
+                                          method="POST"
+                                          style="display: none">
+                                        @csrf
+                                        @method('PATCH')
+                                    </form>
+                                    <button form="reject_booking_{{$booking->id }}"
+                                            class="button delete">Reject
+                                    </button>
+                                    <form id="reject_booking_{{$booking->id}}"
+                                          action="{{ route('dashboard.bookings.reject', $booking) }}"
+                                          method="POST"
+                                          style="display: none">
+                                        @csrf
+                                        @method('PATCH')
+                                    </form>
+                                    <button onclick="location.href ='{{ route('dashboard.bookings.edit', $booking) }}';"
+                                            class="button edit">
+                                        Edit
+                                    </button>
+                                    <button class="button delete"
+                                            onclick="return confirm('Are you sure you want to delete this booking?')"
+                                            form="delete_booking_{{$booking->id }}">Delete
+                                    </button>
 
-                <a href="{{ route('dashboard.bookings') }}" class="card">
-                    <div class="card-title">
-                        <h3>Manage Bookings</h3>
-                    </div>
-                    <div class="card-content">
-                        <p>You have 10 bookings</p>
-                    </div>
-                </a>
-            @elseif($usertype == 'user')
-                <a href="#" class="card">
-                    <div class="card-title">
-                        <h3>Manage Bookings</h3>
-                    </div>
-                    <div class="card-content">
-                        <p>You have 10 bookings</p>
-                    </div>
-                </a>
-            @endif
+                                    <form id="delete_booking_{{$booking->id}}"
+                                          action="{{ route('dashboard.bookings.destroy', $booking) }}"
+                                          method="POST"
+                                          style="display: none">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form>
+                                </td>
+                            </tr>
 
+                        @endforeach
+                    @endif
 
-        </div>
+                    </tbody>
+                </table>
+
+            </div>
+
+        @else
+            {{ abort(403) }}
+        @endif
     </x-dashboard>
 </x-app-layout>
