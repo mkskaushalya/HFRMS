@@ -9,6 +9,11 @@ class HallImage extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'hall_id',
+        'image',
+    ];
+
     public function hall()
     {
         return $this->belongsTo(Hall::class);
