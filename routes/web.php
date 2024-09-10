@@ -46,8 +46,11 @@ Route::controller(DashboardController::class)->group(function () {
     Route::get('dashboard/bookings', 'bookings')->middleware(['auth', 'verified'])->name('dashboard.bookings');
     Route::get('dashboard/bookings/create', 'createBooking')->middleware(['auth', 'verified'])->name('dashboard.bookings.create');
     Route::post('dashboard/bookings', 'storeBooking')->middleware(['auth', 'verified'])->name('dashboard.bookings.store');
+    Route::get('dashboard/bookings/{booking}', 'showBooking')->middleware(['auth', 'verified'])->name('dashboard.bookings.show');
     Route::get('dashboard/bookings/{booking}/edit', 'editBooking')->middleware(['auth', 'verified'])->name('dashboard.bookings.edit');
     Route::patch('dashboard/bookings/{booking}', 'updateBooking')->middleware(['auth', 'verified'])->name('dashboard.bookings.update');
+    Route::patch('dashboard/bookings/{booking}/approve', 'approveBooking')->middleware(['auth', 'verified'])->name('dashboard.bookings.approve');
+    Route::patch('dashboard/bookings/{booking}/reject', 'rejectBooking')->middleware(['auth', 'verified'])->name('dashboard.bookings.reject');
     Route::delete('dashboard/bookings/{booking}', 'destroyBooking')->middleware(['auth', 'verified'])->name('dashboard.bookings.destroy');
 
 
