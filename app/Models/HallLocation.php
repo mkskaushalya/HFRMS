@@ -9,6 +9,12 @@ class HallLocation extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'description',
+        'status',
+    ];
+
     public function hall()
     {
         return $this->hasMany(Hall::class);
