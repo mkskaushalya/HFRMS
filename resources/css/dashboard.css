@@ -359,14 +359,14 @@ section#dashboard {
     gap: 1rem;
 }
 
-#dashboard .content .cont form {
+#dashboard .content .cont form, .myform {
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 1rem;
 }
 
-#dashboard .content .cont form .input-box {
+#dashboard .content .cont form .input-box, .myform .input-box {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -374,18 +374,18 @@ section#dashboard {
 
 }
 
-#dashboard .content .cont form .input-box label {
+#dashboard .content .cont form .input-box label, .myform .input-box label {
     font-size: 0.9rem;
     color: var(--text-light);
 }
 
-#dashboard .content .cont form .input-box .error {
+#dashboard .content .cont form .input-box .error, .myform .input-box .error {
     font-size: 0.9rem;
     color: var(--danger);
     font-style: italic;
 }
 
-#dashboard .content .cont form .input-box input, #dashboard .content .cont form .input-box select, #dashboard .content .cont form .input-box textarea {
+#dashboard .content .cont form .input-box input, #dashboard .content .cont form .input-box select, #dashboard .content .cont form .input-box textarea, .myform .input-box input, .myform .input-box select, .myform .input-box textarea {
     height: 3rem;
     padding: 0.5rem;
     border-radius: var(--border-radius);
@@ -397,12 +397,12 @@ section#dashboard {
     color-scheme: dark;
 }
 
-#dashboard .content .cont form .input-box textarea {
+#dashboard .content .cont form .input-box textarea, .myform .input-box textarea {
     min-height: 4rem;
     max-height: 10rem;
 }
 
-#dashboard .content .cont form .input-box button {
+#dashboard .content .cont form .input-box button, .myform .input-box button {
     height: 3rem;
     max-height: 3rem;
     padding: 0.5rem;
