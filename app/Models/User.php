@@ -38,6 +38,7 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+
     public function halls()
     {
         return $this->hasMany(Hall::class);
@@ -46,6 +47,11 @@ class User extends Authenticatable
     public function reviews()
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function bookings()
+    {
+        return $this->hasMany(hallBooking::class);
     }
 
     public function hallImages()
