@@ -1,3 +1,4 @@
+@php use Carbon\Carbon; @endphp
 <x-default-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -67,6 +68,15 @@
 
                     {{-- Display all halls --}}
                     @foreach($halls as $hall)
+                        @php
+                            $data = isset($request->booking_date) && isset($request->start_time) && isset($request->end_time);
+                            $start_time = Carbon::parse($request->booking_date . ' ' . $request->start_time);
+                            $end_time = Carbon::parse($request->booking_date . ' ' . $request->end_time);
+                            $diff = $start_time->diffInHours($end_time);
+
+                            $bookings = $hall->bookings()->where('booking_date', $request->booking_date)->get();
+
+                        @endphp
                         <div class="hall">
                             <div class="hall-img">
                                 <img src="{{ $hall->image }}" alt="Hall Image">
@@ -74,8 +84,15 @@
                             <div class="hall-info">
                                 <h3>{{ $hall->name }}</h3>
                                 <p>Location: {{ $hall->hallLocation->location }}</p>
-                                <p>Capacity: {{ $hall->capacity }}</p>
-                                <p>Price: ${{ $hall->price }}</p>
+                                <p>Capacity: {{ $hall->capacity  }}</p>
+                                <p>Price: LKR {{ $hall->price }}/hour</p>
+
+                                @if($data)
+                                    <p>Selected hours : {{ ceil($diff)}}</p>
+                                    <p>Selected Price:
+                                        <span class="highlight warning">LKR {{ $hall->price * ceil($diff) }}</p></span>
+                                @endif
+
                                 <a class="button"
                                    href="{{ route('halls.show', $hall)  }}{{ $data ? '?booking_date='.$request->booking_date .'&start_time='. $request->start_time.'&end_time='.$request->end_time.'#hall-availability' : ""}}">Book
                                     Now</a>
