@@ -114,6 +114,56 @@ section .cont .heading h2 {
     color: var(--white);
 }
 
+.button.warning {
+    background-color: var(--warning);
+    color: var(--white);
+}
+
+.button.info {
+    background-color: var(--info);
+    color: var(--white);
+}
+
+.button.primary {
+    background-color: var(--primary);
+    color: var(--white);
+}
+
+.highlight {
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--border-radius);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--white) !important;
+}
+
+.highlight.primary {
+    background-color: var(--primary);
+}
+
+.highlight.secondary {
+    background-color: var(--secondary);
+}
+
+.highlight.danger {
+    background-color: var(--danger);
+}
+
+.highlight.success {
+    background-color: var(--success);
+    color: var(--white);
+}
+
+.highlight.warning {
+    background-color: var(--secondary);
+    color: var(--white);
+}
+
+.highlight.info {
+    background-color: var(--info);
+    color: var(--white);
+}
+
 .button:hover {
     background-color: var(--text-light-2);
 }
