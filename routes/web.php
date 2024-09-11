@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\APIController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HallController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 
 //Static Pages
@@ -11,10 +13,21 @@ Route::view('/', 'home')->name('home');
 Route::view('about', 'about')->name('about');
 Route::view('contact', 'contact')->name('contact');
 
+
 //Hall Routes
 Route::controller(HallController::class)->group(function () {
     Route::get('halls', 'index')->name('halls');
     Route::get('halls/{hall}', 'show')->name('halls.show');
+
+
+});
+
+//Review Routes
+Route::controller(ReviewController::class)->group(function () {
+    Route::get('halls/{hall}/reviews', 'reviews')->middleware(['auth', 'verified'])->name('halls.reviews');
+    Route::post('halls/{hall}/reviews', 'storeReview')->middleware(['auth', 'verified'])->name('halls.reviews.store');
+    Route::patch('halls/{hall}/reviews/{review}', 'updateReview')->middleware(['auth', 'verified'])->name('halls.reviews.update');
+    Route::delete('halls/{hall}/reviews/{review}', 'destroyReview')->middleware(['auth', 'verified'])->name('halls.reviews.destroy');
 });
 
 
@@ -52,6 +65,20 @@ Route::controller(DashboardController::class)->group(function () {
     Route::delete('dashboard/bookings/{booking}', 'destroyBooking')->middleware(['auth', 'verified'])->name('dashboard.bookings.destroy');
 
 
+});
+
+//API Routes
+Route::controller(APIController::class)->group(function () {
+    Route::get('api', 'index')->name('api');
+    Route::get('api/halls', 'halls')->name('api.halls');
+    Route::get('api/halls/{hall}', 'findHall')->name('api.halls.show');
+    Route::get('api/halls/{hall}/{date}/{start_time}/{end_time}', 'checkHall')->name('api.halls.check');
+    Route::get('api/halls/{location}/{date}/{start_time}/{end_time}', 'getAvailableHalls')->name('api.halls.available');
+    Route::post('api/halls/{hall}/book', 'bookHall')->name('api.halls.book');
+    Route::get('api/bookings', 'bookings')->name('api.bookings');
+    Route::get('api/bookings/{booking}', 'showBooking')->name('api.bookings.show');
+    Route::post('api/bookings/{booking}/approve', 'approveBooking')->name('api.bookings.approve');
+    Route::post('api/bookings/{booking}/reject', 'rejectBooking')->name('api.bookings.reject');
 });
 
 //Route::get('dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
