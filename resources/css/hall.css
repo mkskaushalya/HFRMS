@@ -390,19 +390,27 @@ section .cont .heading.smallh span.unavailable {
     row-gap: 2.5rem;
 }
 
+#hall-reviews .cont .reviews > .right .review-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 2.5rem;
+}
+
 #hall-reviews .cont .reviews > .right .review {
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
 }
 
-#hall-reviews .cont .reviews > .right .review .details {
+
+#hall-reviews .cont .reviews > .right .review .details, .review-form .details {
     display: flex;
     column-gap: 1rem;
     align-items: center;
 }
 
-#hall-reviews .cont .reviews > .right .review .details .left {
+#hall-reviews .cont .reviews > .right .review .details .left, .review-form .details .left {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -412,23 +420,23 @@ section .cont .heading.smallh span.unavailable {
     border-radius: 50%;
 }
 
-#hall-reviews .cont .reviews > .right .review .details .left img {
+#hall-reviews .cont .reviews > .right .review .details .left img, .review-form .details .left img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-#hall-reviews .cont .reviews > .right .review .details .right {
+#hall-reviews .cont .reviews > .right .review .details .right, .review-form .details .right {
     display: flex;
     flex-direction: column;
 }
 
-#hall-reviews .cont .reviews > .right .review .details .right h3 {
+#hall-reviews .cont .reviews > .right .review .details .right h3, .review-form .details .right h3 {
     font-weight: 600;
     color: var(--text-light);
 }
 
-#hall-reviews .cont .reviews > .right .review .details .right p {
+#hall-reviews .cont .reviews > .right .review .details .right p, .review-form .details .right p {
     font-size: 0.8rem;
     color: var(--gray);
 }
@@ -474,7 +482,56 @@ section .cont .heading.smallh span.unavailable {
 }
 
 
+.review-form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+}
 
+
+.review-form form .input-box .stars {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: start;
+    gap: 0.5rem;
+}
+
+.review-form form .input-box.submit-btns {
+    flex-direction: row;
+    width: 100%;
+    flex-grow: 1;
+}
+
+.review-form form .input-box.submit-btns button {
+    padding: 0.5rem 2rem;
+    height: 3rem;
+    border: none;
+}
+
+.review-form form .input-box .stars .rating-input {
+    display: none;
+}
+
+.review-form form .input-box .stars .star {
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.review-form form .input-box .stars .star svg {
+    width: 100%;
+    height: 100%;
+    fill: var(--bg-color-2);
+    transition: var(--transition);
+}
+
+.review-form form .input-box .stars .rating-input:checked ~ .star svg, .review-form form .input-box .stars .star:hover ~ .star svg, .review-form form .input-box .stars .star:hover svg {
+    fill: var(--primary);
+}
 
 
 
