@@ -134,20 +134,23 @@
                         <span id="hall-availability-span" class="available">Available</span>
                     @elseif($values['form_type'])
                         <span id="hall-availability-span" class="unavailable">Unavailable</span>
+                    @else
+                        <span id="hall-availability-span" class="available" style="display: none"></span>
                     @endif</h2>
             </div>
             <div class="availability">
                 <div class="search-form">
                     <form
-                        action="{{ route('halls.show', $hall) }}{{ $values['form_type'] ? "#hall-availability" : "" }}"
+                        action="{{ route('halls.show', $hall) }}{{ $values['form_type'] && $hallAvailability ? "#hall-availability" : "" }}"
                         id="hall-availability-form"
-                        method="{{ $values['form_type'] ? "POST" : "GET"}}">
+                        method="{{ $values['form_type'] && $hallAvailability ? "POST" : "GET"}}">
                         @if($values['form_type'])
                             @csrf
                         @endif
                         <div class="input-box">
                             <label for="booking_date">Date</label>
-                            <input type="date" value="{{ today()->format("Y-m-d")  }}"
+                            <input type="date"
+                                   value="{{ isset($request->booking_date) || $request->booking_date != null ||  $request->booking_date != "" ? $request->booking_date : today()->format("Y-m-d")  }}"
                                    min="{{ today()->format("Y-m-d") }}" name="booking_date" id="booking_date"
                                    placeholder="Select Date">
                         </div>
@@ -165,35 +168,42 @@
                         </div>
                         <div class="input-box">
                             <button type="submit"
-                                    id="checkAvailabilitySubmitBtn">{{ $values['form_type'] ? "Book" : "Check"}}</button>
+                                    id="checkAvailabilitySubmitBtn">{{ $values['form_type'] && $hallAvailability ? "Book" : "Check"}}</button>
                         </div>
-                        <script>
-                            var booking_date = document.getElementById('booking_date');
-                            var hallAvailabilityForm = document.getElementById('hall-availability-form');
-                            var start_time = document.getElementById('start_time');
-                            var end_time = document.getElementById('end_time');
-                            var checkAvailabilitySubmitBtn = document.getElementById('checkAvailabilitySubmitBtn');
-                            var hallAvailability = document.getElementById('hall-availability-span');
 
-                            function changeAvailability() {
-                                checkAvailabilitySubmitBtn.innerHTML = "Check";
-                                hallAvailability.style.display = "none";
-                                hallAvailabilityForm.method = "GET";
-                            }
-
-                            booking_date.addEventListener('change', function () {
-                                changeAvailability();
-                            });
-
-                            start_time.addEventListener('change', function () {
-                                changeAvailability();
-                            });
-
-                            end_time.addEventListener('change', function () {
-                                changeAvailability();
-                            });
-                        </script>
                     </form>
+                    <script>
+                        var booking_date = document.getElementById('booking_date');
+                        var hallAvailabilityForm = document.getElementById('hall-availability-form');
+                        var start_time = document.getElementById('start_time');
+                        var end_time = document.getElementById('end_time');
+                        var checkAvailabilitySubmitBtn = document.getElementById('checkAvailabilitySubmitBtn');
+                        var hallAvailability = document.getElementById('hall-availability-span');
+                        var actionURL = "{{ route('halls.show', $hall) }}" + "#hall-availability";
+
+                        if (hallAvailabilityForm.method.toUpperCase() === 'GET') {
+                            hallAvailabilityForm.action = actionURL;
+                        }
+
+                        function changeAvailability() {
+                            checkAvailabilitySubmitBtn.innerHTML = "Check";
+                            hallAvailability.style.display = "none";
+                            hallAvailabilityForm.method = "GET";
+                            hallAvailabilityForm.action = actionURL;
+                        }
+
+                        booking_date.addEventListener('change', function () {
+                            changeAvailability();
+                        });
+
+                        start_time.addEventListener('change', function () {
+                            changeAvailability();
+                        });
+
+                        end_time.addEventListener('change', function () {
+                            changeAvailability();
+                        });
+                    </script>
                 </div>
             </div>
         </div>
@@ -223,6 +233,7 @@
                         $rating_count[5]++;
                 }
 
+                $rateAverage = number_format($hall->reviews->avg('rating'), 1, '.', '')
 
             @endphp
 
@@ -230,16 +241,16 @@
                 <div class="left">
                     <div class="total-reviews-count">
                         <div class="left">
-                            {{ number_format($hall->reviews->avg('rating'), 1, '.', '') }}
+                            {{ $rateAverage }}
                         </div>
                         <div class="right">
-                            <h3>@if($hall->reviews->avg('rating') > 4)
+                            <h3>@if($rateAverage == 5 )
                                     Excellent
-                                @elseif($hall->reviews->avg('rating') > 3)
+                                @elseif($rateAverage < 5 && $rateAverage > 4)
                                     Very Good
-                                @elseif($hall->reviews->avg('rating') > 2)
+                                @elseif($rateAverage < 4 && $rateAverage > 3)
                                     Average
-                                @elseif($hall->reviews->avg('rating') > 1)
+                                @elseif($rateAverage < 3 && $rateAverage > 2)
                                     Poor
                                 @else
                                     Terrible
@@ -311,47 +322,136 @@
                     </div>
                 </div>
                 <div class="right">
-                    @foreach($hall->reviews as $review)
-                        <div class="review">
+
+                    <div class="review-form">
+                        @if(Auth::check())
                             <div class="details">
                                 <div class="left">
-                                    <img src="{{$review->user->profile_picture}}" alt="User Image">
+                                    <img src="{{ Auth::user()->profile_picture }}" alt="User Image">
                                 </div>
                                 <div class="right">
-                                    <h3>{{$review->user->firstname}} {{$review->user->lastname}}</h3>
-                                    <p>{{$review->created_at->format('d/m/Y h:s A')}}</p>
+                                    <h3>{{Auth::user()->firstname}} {{Auth::user()->lastname}}</h3>
+                                    <p>Posting publicly across </p>
                                 </div>
                             </div>
-                            <div class="title"><h3>{{$review->title}}</h3></div>
-                            <div class="message">
-                                <p>{{$review->message}}</p>
-                            </div>
-                            <div class="star-rating">
-                                <div class="stars">
-                                    @for($i = 0; $i < $review->rating; $i++)
-                                        <div class="star">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+
+                            <form action="{{ route('halls.reviews.store', $hall) }}" method="POST" class="myform">
+                                @csrf
+
+                                <input type="hidden" name="hall_id" value="{{ $hall->id }}">
+                                <div class="input-box">
+                                    {{--                                    <label for="rating-box">Rating</label>--}}
+
+                                    <div class="stars">
+                                        <input type="radio" value="5" name="rating" class="rating-input"
+                                               id="rating5">
+                                        <label id="star5" class="star" for="rating5">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                 viewBox="0 0 576 512">
                                                 <path
                                                     d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
                                             </svg>
-                                        </div>
-                                    @endfor
-                                    @for($i = 0; $i < 5 - $review->rating; $i++)
-                                        <div class="star">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
-                                                <!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                        </label>
+                                        <input type="radio" value="4" name="rating" class="rating-input"
+                                               id="rating4">
+                                        <label id="star4" class="star" for="rating4">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                                                 <path
-                                                    d="M287.9 0c9.2 0 17.6 5.2 21.6 13.5l68.6 141.3 153.2 22.6c9 1.3 16.5 7.6 19.3 16.3s.5 18.1-5.9 24.5L433.6 328.4l26.2 155.6c1.5 9-2.2 18.1-9.7 23.5s-17.3 6-25.3 1.7l-137-73.2L151 509.1c-8.1 4.3-17.9 3.7-25.3-1.7s-11.2-14.5-9.7-23.5l26.2-155.6L31.1 218.2c-6.5-6.4-8.7-15.9-5.9-24.5s10.3-14.9 19.3-16.3l153.2-22.6L266.3 13.5C270.4 5.2 278.7 0 287.9 0zm0 79L235.4 187.2c-3.5 7.1-10.2 12.1-18.1 13.3L99 217.9 184.9 303c5.5 5.5 8.1 13.3 6.8 21L171.4 443.7l105.2-56.2c7.1-3.8 15.6-3.8 22.6 0l105.2 56.2L384.2 324.1c-1.3-7.7 1.2-15.5 6.8-21l85.9-85.1L358.6 200.5c-7.8-1.2-14.6-6.1-18.1-13.3L287.9 79z"/>
+                                                    d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
                                             </svg>
-                                        </div>
-                                    @endfor
-
-
+                                        </label>
+                                        <input type="radio" value="3" name="rating" class="rating-input"
+                                               id="rating3"><label id="star3" class="star" for="rating3">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                                                <path
+                                                    d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
+                                            </svg>
+                                        </label>
+                                        <input type="radio" value="2" name="rating" class="rating-input"
+                                               id="rating2">
+                                        <label id="star2" class="star" for="rating2">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                                                <path
+                                                    d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
+                                            </svg>
+                                        </label>
+                                        <input type="radio" value="1" name="rating" class="rating-input"
+                                               id="rating1">
+                                        <label id="star1" class="star" for="rating1">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                                                <path
+                                                    d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
+                                            </svg>
+                                        </label>
+                                    </div>
                                 </div>
-                                ({{$review->rating}}/5)
+                                <div class="input-box">
+                                    <input type="text" name="title" id="title" placeholder="Title">
+                                </div>
+                                <div class="input-box">
+                                    <textarea name="message" id="message" placeholder="Message"></textarea>
+                                </div>
+
+                                <div class="input-box submit-btns">
+                                    <button type="reset" class="button delete">Clear</button>
+                                    <button class="button primary" type="submit">Submit</button>
+                                </div>
+                            </form>
+                        @else
+                            <div class="login-to-review">
+                                <p>Login to review</p>
                             </div>
-                        </div>
-                    @endforeach
+                        @endif
+
+                    </div>
+                    <div class="review-list">
+                        @foreach($hall->reviews->reverse() as $review)
+                            <div class="review">
+                                <div class="details">
+                                    <div class="left">
+                                        <img src="{{$review->user->profile_picture}}" alt="User Image">
+                                    </div>
+                                    <div class="right">
+                                        <h3>{{$review->user->firstname}} {{$review->user->lastname}}</h3>
+                                        <p>{{$review->created_at->format('d/m/Y h:s A')}}</p>
+                                    </div>
+                                </div>
+                                <div class="title"><h3>{{$review->title}}</h3></div>
+                                <div class="message">
+                                    <p>{{$review->message}}</p>
+                                </div>
+                                <div class="star-rating">
+                                    <div class="stars">
+                                        @for($i = 0; $i < $review->rating; $i++)
+                                            <div class="star">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                                                    <path
+                                                        d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
+                                                </svg>
+                                            </div>
+                                        @endfor
+                                        @for($i = 0; $i < 5 - $review->rating; $i++)
+                                            <div class="star">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                                                    <!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                                    <path
+                                                        d="M287.9 0c9.2 0 17.6 5.2 21.6 13.5l68.6 141.3 153.2 22.6c9 1.3 16.5 7.6 19.3 16.3s.5 18.1-5.9 24.5L433.6 328.4l26.2 155.6c1.5 9-2.2 18.1-9.7 23.5s-17.3 6-25.3 1.7l-137-73.2L151 509.1c-8.1 4.3-17.9 3.7-25.3-1.7s-11.2-14.5-9.7-23.5l26.2-155.6L31.1 218.2c-6.5-6.4-8.7-15.9-5.9-24.5s10.3-14.9 19.3-16.3l153.2-22.6L266.3 13.5C270.4 5.2 278.7 0 287.9 0zm0 79L235.4 187.2c-3.5 7.1-10.2 12.1-18.1 13.3L99 217.9 184.9 303c5.5 5.5 8.1 13.3 6.8 21L171.4 443.7l105.2-56.2c7.1-3.8 15.6-3.8 22.6 0l105.2 56.2L384.2 324.1c-1.3-7.7 1.2-15.5 6.8-21l85.9-85.1L358.6 200.5c-7.8-1.2-14.6-6.1-18.1-13.3L287.9 79z"/>
+                                                </svg>
+                                            </div>
+                                        @endfor
+
+
+                                    </div>
+                                    ({{$review->rating}}/5)
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+
                 </div>
             </div>
         </div>
