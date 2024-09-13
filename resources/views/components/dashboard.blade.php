@@ -35,18 +35,20 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
-                <li class="{{ Request::routeIs('dashboard.halls') || Request::routeIs('dashboard.halls.*') ? 'active' : ''}}">
-                    <a href="{{ route('dashboard.halls') }}">
-                        <i class="fas fa-users"></i>
-                        <span>Halls</span>
-                    </a>
-                </li>
-                <li class="{{ Request::routeIs('dashboard.users') || Request::routeIs('dashboard.users.*') ? 'active' : ''}}">
-                    <a href="{{route('dashboard.users')}}">
-                        <i class="fas fa-users"></i>
-                        <span>Users</span>
-                    </a>
-                </li>
+                @if($user->usertype == 'admin')
+                    <li class="{{ Request::routeIs('dashboard.halls') || Request::routeIs('dashboard.halls.*') ? 'active' : ''}}">
+                        <a href="{{ route('dashboard.halls') }}">
+                            <i class="fas fa-users"></i>
+                            <span>Halls</span>
+                        </a>
+                    </li>
+                    <li class="{{ Request::routeIs('dashboard.users') || Request::routeIs('dashboard.users.*') ? 'active' : ''}}">
+                        <a href="{{route('dashboard.users')}}">
+                            <i class="fas fa-users"></i>
+                            <span>Users</span>
+                        </a>
+                    </li>
+                @endif
                 <li class="{{ Request::routeIs('dashboard.bookings') || Request::routeIs('dashboard.bookings.*') ? 'active' : ''}}">
                     <a href="{{route('dashboard.bookings')}}">
                         <i class="fas fa-cogs"></i>
