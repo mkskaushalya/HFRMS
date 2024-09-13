@@ -10,7 +10,7 @@
         </div>
         <div class="profile-info">
             <div class="user-img">
-                <img src="{{ $user->profile_picture }}" alt="user">
+                <img src="{{ url($user->profile_picture) }}" alt="user">
             </div>
             <div class="user-type {{ $user->usertype }}">
                 @if($user->usertype == 'admin')
@@ -40,6 +40,12 @@
                         <a href="{{ route('dashboard.halls') }}">
                             <i class="fas fa-users"></i>
                             <span>Halls</span>
+                        </a>
+                    </li>
+                    <li class="{{ Request::routeIs('dashboard.images') || Request::routeIs('dashboard.images.*') ? 'active' : ''}}">
+                        <a href="{{ route('dashboard.images') }}">
+                            <i class="fas fa-users"></i>
+                            <span>Images</span>
                         </a>
                     </li>
                     <li class="{{ Request::routeIs('dashboard.users') || Request::routeIs('dashboard.users.*') ? 'active' : ''}}">

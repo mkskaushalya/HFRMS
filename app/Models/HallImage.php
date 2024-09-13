@@ -11,7 +11,10 @@ class HallImage extends Model
 
     protected $fillable = [
         'hall_id',
-        'image',
+        'user_id',
+        'title',
+        'url'
+
     ];
 
     public function hall()

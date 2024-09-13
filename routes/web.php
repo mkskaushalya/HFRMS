@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HallBookingController;
 use App\Http\Controllers\HallBookingTempController;
 use App\Http\Controllers\HallController;
+use App\Http\Controllers\HallImageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
 use App\Models\Hall;
@@ -81,8 +82,19 @@ Route::controller(DashboardController::class)->group(function () {
     Route::patch('dashboard/bookings/{booking}/reject', 'rejectBooking')->middleware(['auth', 'verified'])->name('dashboard.bookings.reject');
     Route::delete('dashboard/bookings/{booking}', 'destroyBooking')->middleware(['auth', 'verified'])->name('dashboard.bookings.destroy');
 
-
 });
+
+//Hall Image Routes
+Route::controller(HallImageController::class)->group(function () {
+    Route::get('dashboard/images', 'images')->middleware(['auth', 'verified'])->name('dashboard.images');
+    Route::get('dashboard/images/create', 'createImage')->middleware(['auth', 'verified'])->name('dashboard.images.create');
+    Route::post('dashboard/images', 'storeImage')->middleware(['auth', 'verified'])->name('dashboard.images.store');
+    Route::get('dashboard/images/{hallImage}', 'showImage')->middleware(['auth', 'verified'])->name('dashboard.images.show');
+    Route::get('dashboard/images/{hallImage}/edit', 'editImage')->middleware(['auth', 'verified'])->name('dashboard.images.edit');
+    Route::patch('dashboard/images/{hallImage}', 'updateImage')->middleware(['auth', 'verified'])->name('dashboard.images.update');
+    Route::delete('dashboard/images/{hallImage}', 'destroyImage')->middleware(['auth', 'verified'])->name('dashboard.images.destroy');
+});
+
 
 //API Routes
 Route::controller(APIController::class)->group(function () {

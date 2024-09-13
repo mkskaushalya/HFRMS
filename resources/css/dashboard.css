@@ -290,6 +290,7 @@ section#dashboard {
     background-color: var(--bg-color-2);
     color: var(--text-light);
     transition: var(--transition);
+
 }
 
 #dashboard .content .dashcont table tbody tr:hover {
@@ -300,13 +301,20 @@ section#dashboard {
     padding: 0.5rem;
     font-size: 0.9rem;
     text-align: center;
-    border-bottom: 2px solid var(--bg-color-2);
+
+}
+
+#dashboard .content .dashcont table tbody tr td img {
+    height: 5rem;
+    object-fit: cover;
+
 }
 
 #dashboard .content .dashcont table tbody tr td.tbl_action {
     display: flex;
     justify-content: center;
     gap: 0.5rem;
+    height: 100%;
     align-items: center;
     flex-wrap: wrap;
 }

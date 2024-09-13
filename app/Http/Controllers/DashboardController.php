@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Hall;
 use App\Models\HallBooking;
+use App\Models\HallImage;
 use App\Models\HallLocation;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -15,7 +16,7 @@ use Illuminate\Validation\Rules;
 
 class DashboardController extends Controller
 {
-    private $user, $users, $bookings, $halls;
+    private $user, $users, $bookings, $halls, $hallImages;
 
     public function __construct()
     {
@@ -24,6 +25,7 @@ class DashboardController extends Controller
         } elseif (Auth::user()->usertype == 'admin') {
             $this->users = User::all();
             $this->bookings = HallBooking::all()->reverse();
+            $this->hallImages = HallImage::all()->reverse();
             $this->halls = Hall::all();
             $this->user = Auth::user();
         } else if (Auth::user()->usertype == 'user') {
@@ -41,7 +43,8 @@ class DashboardController extends Controller
             'user' => $this->user,
             'users' => $this->users,
             'bookings' => $this->bookings,
-            'halls' => $this->halls
+            'halls' => $this->halls,
+            'hallImages' => $this->hallImages,
         ]);
     }
 
@@ -378,4 +381,6 @@ class DashboardController extends Controller
     }
 
     //End Booking management
+
+
 }

@@ -48,6 +48,5 @@ class DatabaseSeeder extends Seeder
         HallImage::factory(50)->create();
         Review::factory(50)->create();
         HallBooking::factory(50)->create();
-
     }
 }

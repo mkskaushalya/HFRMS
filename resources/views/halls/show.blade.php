@@ -1,7 +1,7 @@
 @php
 
     use Illuminate\Support\Facades\Auth;
-
+    $user = Auth::user();
     if ($request->booking_date AND $request->start_time AND $request->end_time) {
         $values = [
             'form_type' => true,
@@ -299,7 +299,7 @@
                         @if(Auth::check())
                             <div class="details">
                                 <div class="left">
-                                    <img src="{{ Auth::user()->profile_picture }}" alt="User Image">
+                                    <img src="{{ url($user->profile_picture)  }}" alt="User Image">
                                 </div>
                                 <div class="right">
                                     <h3>{{Auth::user()->firstname}} {{Auth::user()->lastname}}</h3>
@@ -384,7 +384,7 @@
                         @if(Auth::check())
                             <div class="details">
                                 <div class="left">
-                                    <img src="{{ Auth::user()->profile_picture }}" alt="User Image">
+                                    <img src="{{  url($user->profile_picture) }}" alt="User Image">
                                 </div>
                                 <div class="right">
                                     <h3>{{Auth::user()->firstname}} {{Auth::user()->lastname}}</h3>
@@ -509,7 +509,7 @@
                                         </div>
                                     @endif
                                     <div class="left">
-                                        <img src="{{$review->user->profile_picture}}" alt="User Image">
+                                        <img src="{{url($review->user->profile_picture)}}" alt="User Image">
                                     </div>
                                     <div class="right">
                                         <h3>{{$review->user->firstname}} {{$review->user->lastname}}</h3>

@@ -32,6 +32,14 @@
                         <p>You have {{ $bookings->count() }} bookings</p>
                     </div>
                 </a>
+                <a href="{{ route('dashboard.images') }}" class="card">
+                    <div class="card-title">
+                        <h3>Manage Images</h3>
+                    </div>
+                    <div class="card-content">
+                        <p>You have {{ $hallImages->count() }} images</p>
+                    </div>
+                </a>
             @elseif($user->usertype == 'user')
                 <a href="{{ route('dashboard.bookings') }}" class="card">
                     <div class="card-title">
