@@ -2,14 +2,19 @@
 
 use App\Http\Controllers\APIController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HallBookingController;
+use App\Http\Controllers\HallBookingTempController;
 use App\Http\Controllers\HallController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
+use App\Models\Hall;
+use App\Models\HallLocation;
+use App\Models\Review;
 use Illuminate\Support\Facades\Route;
 
 //Static Pages
-Route::view('home', 'home');
-Route::view('/', 'home')->name('home');
+Route::view('home', 'index');
+Route::view('/', 'index', ['locations' => HallLocation::all(), 'halls' => Hall::all(), 'reviews' => Review::latest()->take(10)->get(), 'review_count' => Review::all()->count()])->name('home');
 Route::view('about', 'about')->name('about');
 Route::view('contact', 'contact')->name('contact');
 
@@ -22,12 +27,24 @@ Route::controller(HallController::class)->group(function () {
 
 });
 
+Route::controller(HallBookingTempController::class)->group(function () {
+    Route::post('halls/{hall}/booking', 'hallBookingTemp')->name('halls.booking.temp');
+});
+
 //Review Routes
 Route::controller(ReviewController::class)->group(function () {
     Route::get('halls/{hall}/reviews', 'reviews')->middleware(['auth', 'verified'])->name('halls.reviews');
     Route::post('halls/{hall}/reviews', 'storeReview')->middleware(['auth', 'verified'])->name('halls.reviews.store');
     Route::patch('halls/{hall}/reviews/{review}', 'updateReview')->middleware(['auth', 'verified'])->name('halls.reviews.update');
     Route::delete('halls/{hall}/reviews/{review}', 'destroyReview')->middleware(['auth', 'verified'])->name('halls.reviews.destroy');
+});
+//Review Routes
+Route::controller(HallBookingController::class)->group(function () {
+    Route::get('bookings/{bookingToken}', 'index')->middleware(['auth', 'verified'])->name('bookings');
+    Route::get('bookings/success/{booking}', 'success')->middleware(['auth', 'verified'])->name('bookings.success');
+    Route::post('bookings/{bookingToken}', 'storeBooking')->middleware(['auth', 'verified'])->name('bookings.store');
+    Route::patch('bookings/{booking}', 'updateBooking')->middleware(['auth', 'verified'])->name('bookings.update');
+    Route::delete('bookings/{booking}', 'destroyBooking')->middleware(['auth', 'verified'])->name('bookings.destroy');
 });
 
 
