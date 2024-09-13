@@ -54,6 +54,12 @@ class User extends Authenticatable
         return $this->hasMany(hallBooking::class);
     }
 
+    public function hallBookingTemps()
+    {
+        return $this->hasMany(HallBookingTemp::class);
+    }
+
+
     public function hallImages()
     {
         return $this->hasMany(HallImage::class);
