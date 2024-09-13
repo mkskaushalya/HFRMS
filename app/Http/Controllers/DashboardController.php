@@ -19,10 +19,19 @@ class DashboardController extends Controller
 
     public function __construct()
     {
-        $this->users = User::all();
-        $this->bookings = HallBooking::all()->reverse();
-        $this->halls = Hall::all();
-        $this->user = Auth::user();
+        if (!Auth::check()) {
+            return response()->redirectToRoute('login');
+        } elseif (Auth::user()->usertype == 'admin') {
+            $this->users = User::all();
+            $this->bookings = HallBooking::all()->reverse();
+            $this->halls = Hall::all();
+            $this->user = Auth::user();
+        } else if (Auth::user()->usertype == 'user') {
+            $this->users = User::where('id', Auth::user()->id)->get();
+            $this->bookings = HallBooking::where('user_id', Auth::user()->id)->get();
+            $this->halls = Hall::where('user_id', Auth::user()->id)->get();
+            $this->user = Auth::user();
+        }
     }
 
     public function index(): Response
@@ -242,31 +251,34 @@ class DashboardController extends Controller
 
     public function storeBooking(): RedirectResponse
     {
-        $data = request()->validate([
-            'hall' => 'required',
-            'user' => 'required',
-            'booking_date' => 'required',
-            'start_time' => 'required',
-            'end_time' => 'required',
-            'status' => 'required',
-            'purpose' => 'required',
-            'description' => 'required',
-            'payment' => 'required',
+        if (Auth::user()->usertype == 'admin') {
+            $data = request()->validate([
+                'hall' => 'required',
+                'user' => 'required',
+                'booking_date' => 'required',
+                'start_time' => 'required',
+                'end_time' => 'required',
+                'status' => 'required',
+                'purpose' => 'required',
+                'description' => 'required',
+                'payment' => 'required',
 
-        ]);
+            ]);
 
-        HallBooking::create([
-            'hall_id' => $data['hall'],
-            'user_id' => $data['user'],
-            'booking_date' => $data['booking_date'],
-            'start_time' => $data['start_time'],
-            'end_time' => $data['end_time'],
-            'purpose' => $data['purpose'],
-            'description' => $data['description'],
-            'payment' => $data['payment'],
-            'status' => $data['status'],
-        ]);
-
+            HallBooking::create([
+                'hall_id' => $data['hall'],
+                'user_id' => $data['user'],
+                'booking_date' => $data['booking_date'],
+                'start_time' => $data['start_time'],
+                'end_time' => $data['end_time'],
+                'purpose' => $data['purpose'],
+                'description' => $data['description'],
+                'payment' => $data['payment'],
+                'status' => $data['status'],
+            ]);
+        } else {
+            abort(403);
+        }
         return response()->redirectToRoute('dashboard.bookings');
     }
 
@@ -277,46 +289,75 @@ class DashboardController extends Controller
 
     public function updateBooking(HallBooking $booking): RedirectResponse
     {
-        $data = request()->validate([
-            'hall' => 'required',
-            'user' => 'required',
-            'booking_date' => 'required',
-            'start_time' => 'required',
-            'end_time' => 'required',
-            'status' => 'required',
-            'purpose' => 'required',
-            'description' => 'required',
-            'payment' => 'required',
-        ]);
+        if (Auth::user()->id == $booking->user_id || Auth::user()->usertype == 'admin') {
+            if (Auth::user()->usertype == 'admin') {
+                $data = request()->validate([
+                    'hall' => 'required',
+                    'user' => 'required',
+                    'booking_date' => 'required',
+                    'start_time' => 'required',
+                    'end_time' => 'required',
+                    'status' => 'required',
+                    'purpose' => 'required',
+                    'description' => 'required',
+                    'payment' => 'required',
+                ]);
 
-        $booking->update([
-            'hall_id' => $data['hall'],
-            'user_id' => $data['user'],
-            'booking_date' => $data['booking_date'],
-            'start_time' => $data['start_time'],
-            'end_time' => $data['end_time'],
-            'purpose' => $data['purpose'],
-            'description' => $data['description'],
-            'payment' => $data['payment'],
-            'status' => $data['status'],
-        ]);
+                $booking->update([
+                    'hall_id' => $data['hall'],
+                    'user_id' => $data['user'],
+                    'booking_date' => $data['booking_date'],
+                    'start_time' => $data['start_time'],
+                    'end_time' => $data['end_time'],
+                    'purpose' => $data['purpose'],
+                    'description' => $data['description'],
+                    'payment' => $data['payment'],
+                    'status' => $data['status'],
+                ]);
+            } elseif (Auth::user()->usertype == 'user') {
+                $data = request()->validate([
+                    'booking_date' => 'required',
+                    'start_time' => 'required',
+                    'end_time' => 'required',
+                    'purpose' => 'required',
+                    'description' => 'required',
+                ]);
+
+                $booking->update([
+                    'booking_date' => $data['booking_date'],
+                    'start_time' => $data['start_time'],
+                    'end_time' => $data['end_time'],
+                    'purpose' => $data['purpose'],
+                    'description' => $data['description'],
+                ]);
+            }
+        } else {
+            abort(403);
+        }
 
         return response()->redirectTo(route('dashboard.bookings.show', $booking));
     }
 
     public function destroyBooking(HallBooking $booking): RedirectResponse
     {
-        $booking->delete();
-
+        if (Auth::user()->id == $booking->user_id || Auth::user()->usertype == 'admin') {
+            $booking->delete();
+        } else {
+            abort(403);
+        }
         return response()->redirectToRoute('dashboard.bookings');
     }
 
     public function approveBooking(HallBooking $booking)
     {
+        if (Auth::user()->usertype == 'user') {
+            return response()->redirectToRoute('dashboard.bookings');
+        } else if (Auth::user()->usertype == 'admin') {
+            $booking->update([
+                'status' => 'approved',
+            ]);
+        }
 
-        $booking->update([
-            'status' => 'approved',
-        ]);
 
         return back();
 
@@ -324,11 +365,14 @@ class DashboardController extends Controller
 
     public function rejectBooking(HallBooking $booking)
     {
+        if (Auth::user()->usertype == 'user') {
+            return response()->redirectToRoute('dashboard.bookings');
+        } else if (Auth::user()->usertype == 'admin') {
 
-        $booking->update([
-            'status' => 'rejected',
-        ]);
-
+            $booking->update([
+                'status' => 'rejected',
+            ]);
+        }
         return back();
 
     }
