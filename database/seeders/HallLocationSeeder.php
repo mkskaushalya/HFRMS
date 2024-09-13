@@ -14,7 +14,7 @@ class HallLocationSeeder extends Seeder
     {
         HallLocation::class::factory()->create(
             [
-                'location' => 'RB',
+                'location' => 'Research Building',
                 'status' => 'active',
             ]
         );
@@ -35,7 +35,14 @@ class HallLocationSeeder extends Seeder
 
         HallLocation::class::factory()->create(
             [
-                'location' => 'OUT',
+                'location' => 'TRACE',
+                'status' => 'active',
+            ]
+        );
+
+        HallLocation::class::factory()->create(
+            [
+                'location' => 'Main Hall',
                 'status' => 'active',
             ]
         );
