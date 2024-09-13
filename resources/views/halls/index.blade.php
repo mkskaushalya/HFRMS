@@ -66,6 +66,7 @@
                 <div class="heading"><h2>Available Halls</h2></div>
                 <div class="hall-list">
 
+                    <hr class="review-hr" style="background-color: var(--bg-color-2)">
                     {{-- Display all halls --}}
                     @foreach($halls as $hall)
                         @php
@@ -82,23 +83,47 @@
                                 <img src="{{ $hall->image }}" alt="Hall Image">
                             </div>
                             <div class="hall-info">
-                                <h3>{{ $hall->name }}</h3>
-                                <p>Location: {{ $hall->hallLocation->location }}</p>
-                                <p>Capacity: {{ $hall->capacity  }}</p>
-                                <p>Price: LKR {{ $hall->price }}/hour</p>
+                                <a href="{{ route('halls.show', $hall) }}" class="hall-title">
+                                    <h3>{{ $hall->name }}</h3>
+                                    <p>{{ $hall->description }}</p>
+                                </a>
+                                <div class="ratings">
+                                    @php($ratingAvg = number_format($hall->reviews->avg('rating'), 1, '.', '') )
 
-                                @if($data)
-                                    <p>Selected hours : {{ ceil($diff)}}</p>
-                                    <p>Selected Price:
-                                        <span class="highlight warning">LKR {{ $hall->price * ceil($diff) }}</p></span>
-                                @endif
+                                    <span class="rate">{{ $ratingAvg }}</span><span class="rate-text">@if($ratingAvg == 5)
+                                            Excellent
+                                        @elseif($ratingAvg >= 4)
+                                            Very Good
+                                        @elseif($ratingAvg >= 3)
+                                            Average
+                                        @elseif($ratingAvg >= 2)
+                                            Poor
+                                        @elseif($ratingAvg >= 1)
+                                            Terrible
+                                        @else
+                                            No Rating
+                                        @endif</span>
+                                    <span class="num-rate">{{ $hall->reviews->count() }} Reviews</span>
+                                </div>
+                                <div class="hall-features">
+                                    <p>Location: <span>{{ $hall->hallLocation->location }}</span></p>
+                                    <p>Capacity: <span>{{ $hall->capacity  }}</span></p>
+                                    <p>Price : <span>LKR {{ $hall->price }} / Hour</span></p>
+                                    @if($data)
+                                        <p>Selected hours : <span>{{ ceil($diff)}}</span></p>
+                                        <p>Selected Price:
+                                            <span class="highlight warning">LKR {{ $hall->price * ceil($diff) }}</span>
+                                        </p>
+                                    @endif
+
+                                </div>
 
                                 <a class="button"
                                    href="{{ route('halls.show', $hall)  }}{{ $data ? '?booking_date='.$request->booking_date .'&start_time='. $request->start_time.'&end_time='.$request->end_time.'#hall-availability' : ""}}">Book
                                     Now</a>
                             </div>
                         </div>
-
+                        <hr class="review-hr" style="background-color: var(--bg-color-2)">
                     @endforeach
 
                 </div>
