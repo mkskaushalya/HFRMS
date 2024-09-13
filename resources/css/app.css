@@ -1,6 +1,8 @@
-@import "dashboard.css";
 @import "daterangepicker";
 @import "root.css";
+@import "home.css";
+@import "booking.css";
+@import "dashboard.css";
 @import 'halls.css';
 @import "hall.css";
 
