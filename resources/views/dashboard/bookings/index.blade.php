@@ -8,10 +8,11 @@
         <x-slot:header>{{ __('Dashboard') }} </x-slot:header>
         <x-slot:contentTitle> {{ __('Booking Management') }}</x-slot:contentTitle>
         <x-slot:contentDescription> {{ __('Welcome to booking management dashboard.') }}</x-slot:contentDescription>
-        @if($usertype == 'admin')
+        @if($usertype == 'admin' || $usertype == 'user')
             <div class="header">
                 <div class="add-btn">
-                    <a href="{{ route('dashboard.bookings.create') }}" class="button">Add Booking</a>
+                    <a href="{{ $usertype == 'admin' ? route('dashboard.bookings.create') : route('halls') }}"
+                       class="button">Add Booking</a>
                 </div>
                 <div class="search-bar">
                     <div class="search-box">
@@ -58,26 +59,29 @@
                                     onclick="location.href ='{{ route('dashboard.bookings.show', $booking) }}';"
                                     class="status"><span class="{{$booking->status}}">{{ $booking->status }}</span></td>
                                 <td class="tbl_action">
-                                    <button form="approve_booking_{{$booking->id }}"
-                                            class="button success">Approve
-                                    </button>
-                                    <form id="approve_booking_{{$booking->id}}"
-                                          action="{{ route('dashboard.bookings.approve', $booking) }}"
-                                          method="POST"
-                                          style="display: none">
-                                        @csrf
-                                        @method('PATCH')
-                                    </form>
-                                    <button form="reject_booking_{{$booking->id }}"
-                                            class="button delete">Reject
-                                    </button>
-                                    <form id="reject_booking_{{$booking->id}}"
-                                          action="{{ route('dashboard.bookings.reject', $booking) }}"
-                                          method="POST"
-                                          style="display: none">
-                                        @csrf
-                                        @method('PATCH')
-                                    </form>
+                                    @if($usertype == 'admin')
+                                        <button form="approve_booking_{{$booking->id }}"
+                                                class="button success">Approve
+                                        </button>
+                                        <form id="approve_booking_{{$booking->id}}"
+                                              action="{{ route('dashboard.bookings.approve', $booking) }}"
+                                              method="POST"
+                                              style="display: none">
+                                            @csrf
+                                            @method('PATCH')
+                                        </form>
+                                        <button form="reject_booking_{{$booking->id }}"
+                                                class="button delete">Reject
+                                        </button>
+                                        <form id="reject_booking_{{$booking->id}}"
+                                              action="{{ route('dashboard.bookings.reject', $booking) }}"
+                                              method="POST"
+                                              style="display: none">
+                                            @csrf
+                                            @method('PATCH')
+                                        </form>
+                                    @endif
+
                                     <button onclick="location.href ='{{ route('dashboard.bookings.edit', $booking) }}';"
                                             class="button edit">
                                         Edit
