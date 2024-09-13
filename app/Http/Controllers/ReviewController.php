@@ -18,7 +18,7 @@ class ReviewController extends Controller
             'message' => 'required|string',
         ]);
 
-        Review::create([
+        $review = Review::create([
             'rating' => $request->rating,
             'hall_id' => $request->hall_id,
             'user_id' => auth()->id(),
@@ -27,7 +27,7 @@ class ReviewController extends Controller
         ]);
 
 
-        return back();
+        return redirect(url()->previous() . "#review-{$review->id}");
     }
 
 //    public function reviews(Request $request, Hall $hall): Response
@@ -40,20 +40,22 @@ class ReviewController extends Controller
     {
         $request->validate([
             'rating' => 'required|integer|between:1,5',
-            'comment' => 'required|string',
+            'title' => 'required|string',
+            'message' => 'required|string',
         ]);
 
         $review->update([
             'rating' => $request->rating,
-            'comment' => $request->comment,
+            'title' => $request->title,
+            'message' => $request->message,
         ]);
 
-        return redirect()->route('halls.reviews', $hall);
+        return redirect(url()->previous() . "#review-{$review->id}");
     }
 
     public function destroyReview(Hall $hall, Review $review): RedirectResponse
     {
         $review->delete();
-        return redirect()->route('halls.reviews', $hall);
+        return redirect(url()->previous() . "#reviews");
     }
 }
