@@ -33,12 +33,12 @@
                     </div>
                 </a>
             @elseif($user->usertype == 'user')
-                <a href="#" class="card">
+                <a href="{{ route('dashboard.bookings') }}" class="card">
                     <div class="card-title">
                         <h3>Manage Bookings</h3>
                     </div>
                     <div class="card-content">
-                        <p>You have 10 bookings</p>
+                        <p>You have {{ $bookings->count() }} bookings</p>
                     </div>
                 </a>
             @endif
