@@ -8,7 +8,7 @@
         <x-slot:header>{{ __('Dashboard') }} </x-slot:header>
         <x-slot:contentTitle> {{ __('User details') }}</x-slot:contentTitle>
         <x-slot:contentDescription> {{ __('This page shown a user information\'s.') }}</x-slot:contentDescription>
-        @if($usertype == 'admin')
+        @if($usertype == 'admin' || ($usertype == 'user' && $booking->user_id == Auth::id()))
             <div class="cont">
                 <div class="booking">
                     <div class="booking-info">
@@ -23,26 +23,29 @@
                         <p>Payment : {{ $booking->payment }}</p>
                     </div>
                     <div class="actions">
-                        <button form="approve_booking_{{$booking->id }}"
-                                class="button success">Approve
-                        </button>
-                        <form id="approve_booking_{{$booking->id}}"
-                              action="{{ route('dashboard.bookings.approve', $booking) }}"
-                              method="POST"
-                              style="display: none">
-                            @csrf
-                            @method('PATCH')
-                        </form>
-                        <button form="reject_booking_{{$booking->id }}"
-                                class="button delete">Reject
-                        </button>
-                        <form id="reject_booking_{{$booking->id}}"
-                              action="{{ route('dashboard.bookings.reject', $booking) }}"
-                              method="POST"
-                              style="display: none">
-                            @csrf
-                            @method('PATCH')
-                        </form>
+                        @if($usertype == 'admin')
+                            <button form="approve_booking_{{$booking->id }}"
+                                    class="button success">Approve
+                            </button>
+                            <form id="approve_booking_{{$booking->id}}"
+                                  action="{{ route('dashboard.bookings.approve', $booking) }}"
+                                  method="POST"
+                                  style="display: none">
+                                @csrf
+                                @method('PATCH')
+                            </form>
+                            <button form="reject_booking_{{$booking->id }}"
+                                    class="button delete">Reject
+                            </button>
+                            <form id="reject_booking_{{$booking->id}}"
+                                  action="{{ route('dashboard.bookings.reject', $booking) }}"
+                                  method="POST"
+                                  style="display: none">
+                                @csrf
+                                @method('PATCH')
+                            </form>
+                        @endif
+
                         <button onclick="location.href ='{{ route('dashboard.bookings.edit', $booking) }}';"
                                 class="button edit">
                             Edit
