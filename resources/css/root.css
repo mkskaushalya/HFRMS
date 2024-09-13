@@ -4,6 +4,7 @@
     --secondary: #f39c12;
     --darkbg: #374151;
     --lightbg: #ddd;
+    --lightbg-2: #E5F0FD;
     --danger: #e74c3c;
     --success: #2ecc71;
     --warning: #f1c40f;
@@ -18,12 +19,34 @@
     --gray-darker: #34495e;
     --gray-lighter: #ecf0f1;
 
+    --warning-alert-color: #856404;
+    --warning-alert-background-color: #fff3cd;
+    --warning-alert-border-color: #ffeeba;
+
+    --success-alert-color: #155724;
+    --success-alert-background-color: #d4edda;
+    --success-alert-border-color: #c3e6cb;
+
+    --danger-alert-color: #721c24;
+    --danger-alert-background-color: #f8d7da;
+    --danger-alert-border-color: #f5c6cb;
+
+    --info-alert-color: #0c5460;
+    --info-alert-background-color: #d1ecf1;
+    --info-alert-border-color: #bee5eb;
+
+    --dark-alert-color: #1b1e21;
+    --dark-alert-background-color: #d6d8d9;
+    --dark-alert-border-color: #c6c8ca;
+
+
     --bg-color: rgb(31 41 55);
     --bg-color-hover: #55f1;
     --bg-color-2: rgb(44 62 80);
 
     --text-light: #f5f5f5;
     --text-dark: #34495e;
+    --text-dark-2: #051036;
     --text-gray: #7f8c8d;
     --text-gray-light: #bdc3c7;
     --text-light-2: #aaa;
